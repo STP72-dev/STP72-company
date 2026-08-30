@@ -35,6 +35,7 @@ graph TD
 
     OpsPath --> Ch07["07-operations-build-and-deployment.md"]
     OpsPath --> Ch08["08-security-performance-and-quality.md"]
+    OpsPath --> Ch10["10-deployment-and-cloud-infrastructure.md"]
     OpsPath --> Ch09["09-appendices-and-glossary.md"]
 ```
 
@@ -43,9 +44,9 @@ graph TD
 | Audience | Primary Chapters | Key Focus Areas |
 | :--- | :--- | :--- |
 | **Stakeholders & Product Leads** | [Ch 01](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/01-executive-summary.md), [Ch 04](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/04-content-engine-and-type-system.md) | Value proposition, SME digital transformation positioning, evidence-based engineering claims, solutions taxonomy. |
-| **System Architects** | [Ch 02](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/02-architecture-overview.md), [Ch 03](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/03-routing-and-i18n.md), [Ch 06](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/06-runtime-subsystems.md) | File-based SSR architecture, two-way slug resolution invariants, hardened error recovery pipelines. |
+| **System Architects** | [Ch 02](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/02-architecture-overview.md), [Ch 03](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/03-routing-and-i18n.md), [Ch 06](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/06-runtime-subsystems.md), [Ch 10](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/10-deployment-and-cloud-infrastructure.md) | File-based SSR architecture, two-way slug resolution invariants, hardened error recovery, AWS cloud topology. |
 | **Frontend Engineers** | [Ch 04](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/04-content-engine-and-type-system.md), [Ch 05](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/05-design-system-and-ui-architecture.md), [Ch 06](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/06-runtime-subsystems.md) | TypeScript content contracts, IBM Plex/Carbon design system, OKLCH tokens, zero-FOUC theme hydration, client search. |
-| **DevOps & Platform Engineers** | [Ch 07](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/07-operations-build-and-deployment.md), [Ch 08](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/08-security-performance-and-quality.md), [Ch 09](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/09-appendices-and-glossary.md) | Vite/Nitro compilation, CSRF middleware, unhandled exception interception, bundle optimization, runbooks. |
+| **DevOps & Platform Engineers** | [Ch 07](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/07-operations-build-and-deployment.md), [Ch 08](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/08-security-performance-and-quality.md), [Ch 10](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/10-deployment-and-cloud-infrastructure.md), [Ch 09](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/09-appendices-and-glossary.md) | Multi-stage Docker packaging, GitHub Actions OIDC CI/CD, AWS App Runner, ECR, bundle optimization, runbooks. |
 
 ---
 
@@ -69,15 +70,22 @@ graph TD
    * CSRF protection for server functions, error leakage prevention, client bundle efficiency, Core Web Vitals, and WCAG accessibility standards.
 9. [**Chapter 09: Appendices, Route Matrix & Domain Glossary**](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/09-appendices-and-glossary.md)
    * Complete route map matrix, taxonomy cross-reference, status vocabulary definitions, file inventory, and troubleshooting matrices.
+10. [**Chapter 10: Containerization, Local Deployment & AWS Cloud Architecture**](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/10-deployment-and-cloud-infrastructure.md)
+   * Multi-stage Docker packaging, Docker Compose orchestration, AWS App Runner & Amazon ECR infrastructure, GitHub Actions OIDC CI/CD deployment, and operational runbooks.
 
 ---
 
 ## ⚡ Quick Start for Developers
 
-### Prerequisites
-- Node.js 20+ (or Bun 1.2+)
-- `npm` / `bun`
+### Option 1: Using Docker Compose (Zero Configuration)
+```bash
+# Build and start the containerized platform
+docker compose up -d
 
+# Open in browser: http://localhost:3000
+```
+
+### Option 2: Local Node.js / Bun Development
 ```bash
 # Clone the repository
 git clone <repository-url>
@@ -92,3 +100,4 @@ bun run dev   # or: npm run dev
 # Build for production
 bun run build # or: npm run build
 ```
+

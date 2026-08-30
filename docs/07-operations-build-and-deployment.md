@@ -88,24 +88,10 @@ bun run build
 wrangler pages deploy .output/public
 ```
 
-#### Target: Docker / Standalone Node.js Container
-To run in a containerized environment:
-```dockerfile
-FROM oven/bun:1.2-slim as builder
-WORKDIR /app
-COPY package.json bun.lock ./
-RUN bun install --frozen-lockfile
-COPY . .
-RUN bun run build
+#### Target: Docker Containerization & Cloud Deployment (Local & AWS)
+The repository includes a production multi-stage [`Dockerfile`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/Dockerfile), [`docker-compose.yml`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docker-compose.yml), and automated AWS CI/CD pipeline in [`.github/workflows/deploy-aws.yml`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/.github/workflows/deploy-aws.yml).
 
-FROM oven/bun:1.2-slim
-WORKDIR /app
-COPY --from=builder /app/.output ./.output
-ENV PORT=3000
-ENV NODE_ENV=production
-EXPOSE 3000
-CMD ["bun", "run", ".output/server/index.mjs"]
-```
+For comprehensive instructions on Docker Compose local setup, Amazon ECR repository creation, and AWS App Runner deployment via OIDC, refer to **[Chapter 10: Containerization, Local Deployment & AWS Cloud Architecture](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/docs/10-deployment-and-cloud-infrastructure.md)**.
 
 ---
 
