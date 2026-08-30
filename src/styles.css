@@ -1,0 +1,297 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * STP72 design system.
+ *
+ * Discipline: IBM Plex typography, 8px rhythm, rectangular geometry,
+ * flat neutral surfaces, one controlled accent, high-contrast focus states.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utilities.
+ * :root / .dark hold the actual values. All colors use oklch.
+ */
+
+@theme inline {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Layered neutral surfaces (Carbon-style sectional contrast, no shadows) */
+  --color-layer-01: var(--layer-01);
+  --color-layer-02: var(--layer-02);
+  --color-layer-03: var(--layer-03);
+  --color-inverse: var(--inverse);
+  --color-overlay: var(--overlay);
+  --color-inverse-foreground: var(--inverse-foreground);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+  --color-link: var(--link);
+  --color-support: var(--support);
+
+  /* Semantic status roles (never color-only in UI: always paired with text/shape) */
+  --color-support-error: var(--support-error);
+  --color-support-warning: var(--support-warning);
+  --color-support-success: var(--support-success);
+  --color-support-info: var(--support-info);
+
+  /* Interactive roles */
+  --color-interactive: var(--interactive);
+  --color-interactive-hover: var(--interactive-hover);
+  --color-interactive-active: var(--interactive-active);
+  --color-focus: var(--ring);
+
+
+  --ease-system: cubic-bezier(0.2, 0, 0.38, 0.9);
+
+  /* Near-zero radius across the system */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 2px;
+  --radius-2xl: 2px;
+  --radius-3xl: 2px;
+  --radius-4xl: 2px;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0px;
+
+  /* Neutral scale: white -> light gray -> near black */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.19 0.005 260);
+  --layer-01: oklch(0.968 0.002 260);
+  --layer-02: oklch(0.938 0.003 260);
+  --layer-03: oklch(0.985 0.001 260);
+
+  --card: oklch(0.968 0.002 260);
+  --card-foreground: oklch(0.19 0.005 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.19 0.005 260);
+
+  /* Accent: controlled deep blue, deliberately not a cyan "AI" tint */
+  --accent: oklch(0.47 0.168 258);
+  --accent-foreground: oklch(1 0 0);
+  --link: oklch(0.44 0.16 258);
+  --support: oklch(0.47 0.168 258);
+
+  --support-error: oklch(0.52 0.2 27);
+  --support-warning: oklch(0.68 0.14 75);
+  --support-success: oklch(0.52 0.12 150);
+  --support-info: oklch(0.5 0.13 240);
+
+  --interactive: oklch(0.47 0.168 258);
+  --interactive-hover: oklch(0.41 0.16 258);
+  --interactive-active: oklch(0.34 0.14 258);
+
+
+  --primary: oklch(0.47 0.168 258);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.938 0.003 260);
+  --secondary-foreground: oklch(0.19 0.005 260);
+  --muted: oklch(0.955 0.002 260);
+  --muted-foreground: oklch(0.44 0.006 260);
+
+  --inverse: oklch(0.19 0.005 260);
+  --overlay: oklch(0.19 0.005 260 / 50%);
+  --inverse-foreground: oklch(0.98 0.001 260);
+
+  --destructive: oklch(0.52 0.2 27);
+  --destructive-foreground: oklch(1 0 0);
+
+  --border: oklch(0.88 0.003 260);
+  --border-subtle: oklch(0.92 0.003 260);
+  --border-strong: oklch(0.62 0.005 260);
+  --input: oklch(0.62 0.005 260);
+  --ring: oklch(0.47 0.168 258);
+
+  --chart-1: oklch(0.47 0.168 258);
+  --chart-2: oklch(0.44 0.006 260);
+  --chart-3: oklch(0.62 0.005 260);
+  --chart-4: oklch(0.55 0.09 200);
+  --chart-5: oklch(0.72 0.004 260);
+
+  --sidebar: oklch(0.968 0.002 260);
+  --sidebar-foreground: oklch(0.19 0.005 260);
+  --sidebar-primary: oklch(0.47 0.168 258);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.938 0.003 260);
+  --sidebar-accent-foreground: oklch(0.19 0.005 260);
+  --sidebar-border: oklch(0.88 0.003 260);
+  --sidebar-ring: oklch(0.47 0.168 258);
+}
+
+.dark {
+  /* Dark layering: near-black global background, each nested layer slightly lighter. */
+  --background: oklch(0.215 0.003 260);
+  --foreground: oklch(0.94 0.002 260);
+  --layer-01: oklch(0.275 0.004 260);
+  --layer-02: oklch(0.33 0.005 260);
+  --layer-03: oklch(0.245 0.003 260);
+
+  --card: oklch(0.275 0.004 260);
+  --card-foreground: oklch(0.94 0.002 260);
+  --popover: oklch(0.275 0.004 260);
+  --popover-foreground: oklch(0.94 0.002 260);
+
+  /* Readable, non-neon accent on dark surfaces */
+  --accent: oklch(0.6 0.145 258);
+  --accent-foreground: oklch(0.99 0 0);
+  --link: oklch(0.78 0.09 258);
+  --support: oklch(0.7 0.12 258);
+
+  --support-error: oklch(0.68 0.16 25);
+  --support-warning: oklch(0.78 0.13 78);
+  --support-success: oklch(0.72 0.13 152);
+  --support-info: oklch(0.74 0.1 240);
+
+  --interactive: oklch(0.6 0.145 258);
+  --interactive-hover: oklch(0.66 0.15 258);
+  --interactive-active: oklch(0.72 0.14 258);
+
+  --primary: oklch(0.6 0.145 258);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.33 0.005 260);
+  --secondary-foreground: oklch(0.94 0.002 260);
+  --muted: oklch(0.3 0.004 260);
+  --muted-foreground: oklch(0.76 0.003 260);
+
+  /* Dark theme: the "inverse" emphasis surface stays dark — a large near-white
+     block on a near-black page is fatiguing. It reads as the top layer instead. */
+  --inverse: oklch(0.3 0.006 260);
+  --overlay: oklch(0.11 0.004 260 / 70%);
+  --inverse-foreground: oklch(0.97 0.001 260);
+
+
+  --destructive: oklch(0.62 0.19 25);
+  --destructive-foreground: oklch(1 0 0);
+
+  --border: oklch(1 0 0 / 14%);
+  --border-subtle: oklch(1 0 0 / 8%);
+  --border-strong: oklch(1 0 0 / 34%);
+  --input: oklch(1 0 0 / 34%);
+  --ring: oklch(0.82 0.07 258);
+
+
+  --chart-1: oklch(0.68 0.16 258);
+  --chart-2: oklch(0.74 0.004 260);
+  --chart-3: oklch(0.5 0.005 260);
+  --chart-4: oklch(0.68 0.09 200);
+  --chart-5: oklch(0.4 0.004 260);
+
+  --sidebar: oklch(0.23 0.005 260);
+  --sidebar-foreground: oklch(0.96 0.001 260);
+  --sidebar-primary: oklch(0.55 0.18 258);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.28 0.006 260);
+  --sidebar-accent-foreground: oklch(0.96 0.001 260);
+  --sidebar-border: oklch(1 0 0 / 16%);
+  --sidebar-ring: oklch(0.74 0.12 258);
+}
+
+/* Small structural label: sentence case, tight, no tracked-out uppercase. */
+@utility label-section {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* Editorial fluid display type, 8px-aligned line heights. */
+@utility type-display-lg {
+  font-size: clamp(2.25rem, 4.4vw, 3.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+
+@utility type-display-md {
+  font-size: clamp(1.75rem, 2.8vw, 2.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+}
+
+@utility type-display-sm {
+  font-size: clamp(1.375rem, 1.8vw, 1.75rem);
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+}
+
+@utility type-lede {
+  font-size: clamp(1.0625rem, 1.25vw, 1.25rem);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-sans);
+    font-weight: 400;
+  }
+
+  /* High-contrast focus ring, Carbon-style: solid, offset-free, 2px */
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 1px;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-foreground);
+  }
+}
