@@ -22,7 +22,15 @@ service; AWS currently publishes it as version `v6`.
 ## Security Boundary
 
 - The GitHub trust policy requires both `aud=sts.amazonaws.com` and the exact
-  `repo:STP72-dev/STP72-company:environment:production` subject.
+  `repo:STP72-dev@322710513/STP72-company@1351216350:environment:production`
+  subject. **Note:** this GitHub organization has the OIDC subject-claim
+  "immutable ID" customization enabled, so the `sub` claim embeds the
+  numeric org/repo IDs (`@322710513` / `@1351216350`) alongside the names —
+  this protects against a deleted-and-recreated repo/org reusing the same
+  name to hijack the trust relationship. Verified by printing the actual
+  issued token's claims from a live GitHub Actions run; the plain
+  `repo:STP72-dev/STP72-company:environment:production` form (no `@ID`
+  suffixes) does **not** match and the role assumption is denied.
 - The GitHub permissions policy scopes image upload to one ECR repository and
   `iam:PassRole` to the exact execution and infrastructure roles.
 - No policy grants static credentials, administrator access, IAM role creation,
