@@ -6,3 +6,7 @@ pnpm-lock.yaml
 package-lock.json
 bun.lock
 routeTree.gen.ts
+
+# Vendored agent-skill content (not authored/maintained by this project;
+# excluded from the shipped app the same way .dockerignore excludes it).
+.agents
