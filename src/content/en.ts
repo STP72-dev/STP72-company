@@ -1,9 +1,5 @@
 import type { LocaleContent } from "./types";
-import {
-  solutionsPageEn,
-  solutionFamiliesEn,
-  solutionDetailsEn,
-} from "./solutions.en";
+import { solutionsPageEn, solutionFamiliesEn, solutionDetailsEn } from "./solutions.en";
 
 export const en: LocaleContent = {
   meta: {
@@ -295,8 +291,7 @@ export const en: LocaleContent = {
       ],
       situations: {
         title: "What problem does this address?",
-        intro:
-          "Common starting points where it is worth examining whether AI applies.",
+        intro: "Common starting points where it is worth examining whether AI applies.",
         items: [
           {
             key: "documents",
@@ -331,8 +326,7 @@ export const en: LocaleContent = {
           "There is a starting point to measure against — time spent or error rate, for example.",
           "The cost of an error is known, so the level of review can be set accordingly.",
         ],
-        note:
-          "Where source material is incomplete or contradictory, we sort out the data and the process first. In such cases, this is often a precondition for introducing AI at all.",
+        note: "Where source material is incomplete or contradictory, we sort out the data and the process first. In such cases, this is often a precondition for introducing AI at all.",
       },
       scope: {
         title: "What we build",
@@ -399,7 +393,8 @@ export const en: LocaleContent = {
       },
       start: {
         title: "How a project starts",
-        intro: "The project can be split into stages; at the end of each stage the result and the next step can be assessed separately.",
+        intro:
+          "The project can be split into stages; at the end of each stage the result and the next step can be assessed separately.",
         steps: [
           {
             key: "assessment",
@@ -480,7 +475,8 @@ export const en: LocaleContent = {
       },
       scope: {
         title: "What we build",
-        intro: "A web application shaped around one operational area, usable in a browser and on mobile.",
+        intro:
+          "A web application shaped around one operational area, usable in a browser and on mobile.",
         items: [
           {
             key: "inventory",
@@ -543,7 +539,8 @@ export const en: LocaleContent = {
       },
       start: {
         title: "How a project starts",
-        intro: "Roll-out can start with one well-bounded area and extend based on results and business needs.",
+        intro:
+          "Roll-out can start with one well-bounded area and extend based on results and business needs.",
         steps: [
           {
             key: "assessment",
@@ -623,7 +620,8 @@ export const en: LocaleContent = {
       },
       scope: {
         title: "What we build",
-        intro: "From sorting out the data to forecasting — each step produces a result that is usable on its own.",
+        intro:
+          "From sorting out the data to forecasting — each step produces a result that is usable on its own.",
         items: [
           {
             key: "consolidation",
@@ -795,7 +793,8 @@ export const en: LocaleContent = {
       },
       scope: {
         title: "What we build",
-        intro: "Scope depends on which interfaces are available and where the real manual burden sits.",
+        intro:
+          "Scope depends on which interfaces are available and where the real manual burden sits.",
         items: [
           {
             key: "connections",
@@ -831,7 +830,8 @@ export const en: LocaleContent = {
       },
       criteria: {
         title: "How we decide what is worth connecting",
-        intro: "Not every connection pays off. These are the questions we go through during the assessment.",
+        intro:
+          "Not every connection pays off. These are the questions we go through during the assessment.",
         items: [
           "How much burden duplicate entry or manual reconciliation actually creates today.",
           "Which system is the primary source for a given data set, and who owns its content.",
@@ -875,7 +875,8 @@ export const en: LocaleContent = {
       },
       technical: {
         title: "Technical background",
-        intro: "Implementation depends on the systems involved; the following are options, not a required architecture.",
+        intro:
+          "Implementation depends on the systems involved; the following are options, not a required architecture.",
         items: [
           "HTTP-based interfaces where the system involved offers them.",
           "File-based import and export on a schedule, with an error list and repeatable runs.",
@@ -924,7 +925,8 @@ export const en: LocaleContent = {
       },
       scope: {
         title: "What it can cover",
-        intro: "From the list below we include what the importance of the solution and the existing environment justify.",
+        intro:
+          "From the list below we include what the importance of the solution and the existing environment justify.",
         items: [
           {
             key: "deploy",
@@ -1153,7 +1155,8 @@ export const en: LocaleContent = {
     },
     outputs: {
       title: "What the company receives at the end of each stage",
-      intro: "Every stage closes with something concrete: a written document or a working solution, not a general consulting summary.",
+      intro:
+        "Every stage closes with something concrete: a written document or a working solution, not a general consulting summary.",
       items: [
         {
           key: "written",
@@ -1214,7 +1217,8 @@ export const en: LocaleContent = {
     moreLabel: "More",
     homeLabel: "Home",
     breadcrumbLabel: "Breadcrumb",
-    pageInProgress: "Detailed content for this page is still being expanded. For a specific question, get in touch.",
+    pageInProgress:
+      "Detailed content for this page is still being expanded. For a specific question, get in touch.",
     currentPageLabel: "Current page",
     appearanceLabel: "Appearance",
     themeToDark: "Switch to dark appearance",
@@ -1258,7 +1262,6 @@ export const en: LocaleContent = {
       whatToVerify: "What you should verify",
       close: "Close",
     },
-
   },
   nav: [
     { key: "solutions", label: "Solutions", href: "#megoldasok" },
@@ -1465,7 +1468,6 @@ export const en: LocaleContent = {
             "Role-based access and audit principles.",
             "Reporting requirements and the data structure behind them.",
           ],
-
         },
         {
           key: "forecastlabai",
@@ -1481,7 +1483,6 @@ export const en: LocaleContent = {
             "Dashboards that show the forecast and its uncertainty together.",
             "A container-based development and deployment approach.",
           ],
-
         },
         {
           key: "wms-food-prod",
@@ -1497,7 +1498,6 @@ export const en: LocaleContent = {
             "Documented role-based access and audit principles.",
             "Operational observability and deployment considerations written down.",
           ],
-
         },
         {
           key: "warehouse-management",
@@ -1512,7 +1512,6 @@ export const en: LocaleContent = {
             "Data import and export with validation checks.",
             "Monitoring and operational signals for following how the system behaves.",
           ],
-
         },
       ],
     },
@@ -1529,7 +1528,13 @@ export const en: LocaleContent = {
       {
         key: "services",
         title: "Services",
-        pages: ["ai-solutions", "business-systems", "data-forecasting", "software-integrations", "devops-infrastructure"],
+        pages: [
+          "ai-solutions",
+          "business-systems",
+          "data-forecasting",
+          "software-integrations",
+          "devops-infrastructure",
+        ],
       },
       {
         key: "company",
@@ -1581,8 +1586,7 @@ export const en: LocaleContent = {
     {
       key: "integration-operations",
       name: "Integration and operations",
-      summary:
-        "Connecting systems and keeping them running: data links, operations and security.",
+      summary: "Connecting systems and keeping them running: data links, operations and security.",
       points: [
         "Links to invoicing, webshop and accounting systems",
         "Data migration and validation",

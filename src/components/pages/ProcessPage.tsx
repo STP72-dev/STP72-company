@@ -30,7 +30,10 @@ export function ProcessPage({ locale }: { locale: Locale }) {
 
         <ol className="mt-12 border-t border-border-strong">
           {p.stages.items.map((stage, index) => (
-            <li key={stage.key} className="grid gap-4 border-b border-border py-8 lg:grid-cols-12 lg:gap-8">
+            <li
+              key={stage.key}
+              className="grid gap-4 border-b border-border py-8 lg:grid-cols-12 lg:gap-8"
+            >
               <div className="lg:col-span-4">
                 <p className="font-mono text-xs text-muted-foreground">
                   {String(index + 1).padStart(2, "0")} · {stage.code}
@@ -47,7 +50,9 @@ export function ProcessPage({ locale }: { locale: Locale }) {
             </li>
           ))}
         </ol>
-        <p className="mt-8 max-w-[46rem] text-sm leading-relaxed text-muted-foreground">{p.stages.note}</p>
+        <p className="mt-8 max-w-[46rem] text-sm leading-relaxed text-muted-foreground">
+          {p.stages.note}
+        </p>
       </Section>
 
       {/* What we ask for before the first conversation */}
@@ -57,7 +62,9 @@ export function ProcessPage({ locale }: { locale: Locale }) {
             <DisplayHeading id="prepare-heading" size="sm">
               {p.prepare.title}
             </DisplayHeading>
-            <p className="mt-6 text-base leading-relaxed text-muted-foreground">{p.prepare.intro}</p>
+            <p className="mt-6 text-base leading-relaxed text-muted-foreground">
+              {p.prepare.intro}
+            </p>
             <p className="mt-6 border-l-2 border-border-strong pl-4 text-sm leading-relaxed text-muted-foreground">
               {p.prepare.note}
             </p>
@@ -103,7 +110,9 @@ export function ProcessPage({ locale }: { locale: Locale }) {
           </div>
           <div className="lg:col-span-6">
             <DisplayHeading size="sm">{p.dataAccess.title}</DisplayHeading>
-            <p className="mt-6 text-base leading-relaxed text-muted-foreground">{p.dataAccess.intro}</p>
+            <p className="mt-6 text-base leading-relaxed text-muted-foreground">
+              {p.dataAccess.intro}
+            </p>
             <RuleList items={p.dataAccess.items} className="mt-6" />
           </div>
         </div>

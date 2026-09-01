@@ -1,8 +1,4 @@
-import type {
-  SolutionDetailContent,
-  SolutionFamilyContent,
-  SolutionsPageContent,
-} from "./types";
+import type { SolutionDetailContent, SolutionFamilyContent, SolutionsPageContent } from "./types";
 import type { SolutionFamilyKey, SolutionKey } from "@/config/solutions";
 
 /** Magyar nyelvű megoldáskatalógus: három terület, tizenhárom részmegoldás. */

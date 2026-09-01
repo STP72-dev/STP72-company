@@ -15,7 +15,6 @@ type TileProps = {
   children?: ReactNode;
 };
 
-
 /**
  * Flat rectangular tile: no radius, no shadow, no hover lift.
  * Structure comes from borders and the top rule, not from elevation.

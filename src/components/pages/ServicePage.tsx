@@ -14,14 +14,24 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const Arrow = () => (
-  <svg aria-hidden="true" viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.25">
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 16 16"
+    className="h-4 w-4"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.25"
+  >
     <path d="M3 8h9.5M9 4.5 12.5 8 9 11.5" />
   </svg>
 );
 
 /** Column count follows the real number of blocks so no empty cell is left. */
 const gridFor = (count: number) =>
-  cn("grid gap-px border-t border-border bg-border md:grid-cols-2", count % 3 === 0 ? "xl:grid-cols-3" : "");
+  cn(
+    "grid gap-px border-t border-border bg-border md:grid-cols-2",
+    count % 3 === 0 ? "xl:grid-cols-3" : "",
+  );
 
 /**
  * Editorial shell for the fully written flagship service pages.
@@ -76,7 +86,10 @@ export function ServicePage({ locale, page }: { locale: Locale; page: SubPageKey
                     {paragraph}
                   </Lede>
                 ) : (
-                  <p key={paragraph} className="mt-4 max-w-[46rem] text-base leading-relaxed text-muted-foreground">
+                  <p
+                    key={paragraph}
+                    className="mt-4 max-w-[46rem] text-base leading-relaxed text-muted-foreground"
+                  >
                     {paragraph}
                   </p>
                 ),
@@ -110,9 +123,16 @@ export function ServicePage({ locale, page }: { locale: Locale; page: SubPageKey
 
         <ul className="mt-12 border-t border-border-strong">
           {s.situations.items.map((item) => (
-            <li key={item.key} className="grid gap-2 border-b border-border py-6 lg:grid-cols-12 lg:gap-8">
-              <h3 className="text-base font-semibold text-foreground lg:col-span-4">{item.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground lg:col-span-8">{item.body}</p>
+            <li
+              key={item.key}
+              className="grid gap-2 border-b border-border py-6 lg:grid-cols-12 lg:gap-8"
+            >
+              <h3 className="text-base font-semibold text-foreground lg:col-span-4">
+                {item.title}
+              </h3>
+              <p className="text-sm leading-relaxed text-muted-foreground lg:col-span-8">
+                {item.body}
+              </p>
             </li>
           ))}
         </ul>
@@ -136,8 +156,13 @@ export function ServicePage({ locale, page }: { locale: Locale; page: SubPageKey
             {children.map((key) => {
               const d = c.solutionDetails[key];
               return (
-                <li key={key} className="grid gap-3 border-b border-border py-6 lg:grid-cols-12 lg:gap-8">
-                  <h3 className="text-base font-semibold text-foreground lg:col-span-4">{d.navLabel}</h3>
+                <li
+                  key={key}
+                  className="grid gap-3 border-b border-border py-6 lg:grid-cols-12 lg:gap-8"
+                >
+                  <h3 className="text-base font-semibold text-foreground lg:col-span-4">
+                    {d.navLabel}
+                  </h3>
                   <div className="lg:col-span-8">
                     <p className="max-w-[46rem] text-sm leading-relaxed text-muted-foreground">
                       {d.catalogSummary}
@@ -166,13 +191,21 @@ export function ServicePage({ locale, page }: { locale: Locale; page: SubPageKey
               <DisplayHeading id="criteria-heading" size="sm">
                 {s.criteria.title}
               </DisplayHeading>
-              <p className="mt-6 text-base leading-relaxed text-muted-foreground">{s.criteria.intro}</p>
+              <p className="mt-6 text-base leading-relaxed text-muted-foreground">
+                {s.criteria.intro}
+              </p>
             </div>
             <div className="lg:col-span-6 lg:col-start-7">
               <ul className="border-t border-border-strong">
                 {s.criteria.items.map((item) => (
-                  <li key={item} className="flex gap-4 border-b border-border py-4 text-sm leading-relaxed text-muted-foreground">
-                    <span aria-hidden="true" className="mt-2.5 h-px w-4 shrink-0 bg-border-strong" />
+                  <li
+                    key={item}
+                    className="flex gap-4 border-b border-border py-4 text-sm leading-relaxed text-muted-foreground"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mt-2.5 h-px w-4 shrink-0 bg-border-strong"
+                    />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -224,7 +257,10 @@ export function ServicePage({ locale, page }: { locale: Locale; page: SubPageKey
             </div>
             <ul className="lg:col-span-6 lg:col-start-7">
               {s.fit.items.map((item) => (
-                <li key={item.key} className="border-t border-border py-6 first:border-t-0 first:pt-0">
+                <li
+                  key={item.key}
+                  className="border-t border-border py-6 first:border-t-0 first:pt-0"
+                >
                   <h3 className="text-base font-semibold text-foreground">{item.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.body}</p>
                 </li>
@@ -233,7 +269,6 @@ export function ServicePage({ locale, page }: { locale: Locale; page: SubPageKey
           </div>
         </Section>
       ) : null}
-
 
       {/* Optional illustrative figure */}
       {s.figure ? (
@@ -272,11 +307,16 @@ export function ServicePage({ locale, page }: { locale: Locale; page: SubPageKey
               <DisplayHeading id="maturity-heading" size="sm">
                 {s.maturity.title}
               </DisplayHeading>
-              <p className="mt-6 text-base leading-relaxed text-muted-foreground">{s.maturity.intro}</p>
+              <p className="mt-6 text-base leading-relaxed text-muted-foreground">
+                {s.maturity.intro}
+              </p>
             </div>
             <ol className="lg:col-span-6 lg:col-start-7">
               {s.maturity.steps.map((step) => (
-                <li key={step.key} className="border-t border-border py-6 first:border-t-0 first:pt-0">
+                <li
+                  key={step.key}
+                  className="border-t border-border py-6 first:border-t-0 first:pt-0"
+                >
                   <h3 className="text-base font-semibold text-foreground">{step.name}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.body}</p>
                 </li>
@@ -301,7 +341,9 @@ export function ServicePage({ locale, page }: { locale: Locale; page: SubPageKey
         <ol className="mt-12 grid gap-px border-t border-border bg-border md:grid-cols-2 xl:grid-cols-4">
           {s.start.steps.map((step, index) => (
             <li key={step.key} className="flex h-full flex-col bg-background p-6 md:p-8">
-              <span className="font-mono text-xs text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>
+              <span className="font-mono text-xs text-muted-foreground">
+                {String(index + 1).padStart(2, "0")}
+              </span>
               <h3 className="mt-4 text-base font-semibold text-foreground">{step.name}</h3>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{step.body}</p>
             </li>
@@ -317,14 +359,19 @@ export function ServicePage({ locale, page }: { locale: Locale; page: SubPageKey
             <DisplayHeading id="evidence-heading" size="sm" className="mt-6">
               {s.evidence.title}
             </DisplayHeading>
-            <p className="mt-6 text-base leading-relaxed text-muted-foreground">{s.evidence.intro}</p>
+            <p className="mt-6 text-base leading-relaxed text-muted-foreground">
+              {s.evidence.intro}
+            </p>
             <ArrowLink href={siteConfig.links.github} external className="mt-8">
               {c.home.references.cta}
             </ArrowLink>
           </div>
           <ul className="lg:col-span-6 lg:col-start-7">
             {evidence.map((item) => (
-              <li key={item.key} className="border-t border-border py-6 first:border-t-0 first:pt-0">
+              <li
+                key={item.key}
+                className="border-t border-border py-6 first:border-t-0 first:pt-0"
+              >
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
                   <h3 className="text-base font-semibold text-foreground">{item.name}</h3>
                   <StatusIndicator
@@ -352,7 +399,9 @@ export function ServicePage({ locale, page }: { locale: Locale; page: SubPageKey
             <DisplayHeading id="technical-heading" level={2} size="sm">
               {s.technical.title}
             </DisplayHeading>
-            <p className="mt-6 text-sm leading-relaxed text-muted-foreground">{s.technical.intro}</p>
+            <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
+              {s.technical.intro}
+            </p>
           </div>
           <ul className="lg:col-span-6 lg:col-start-7">
             {s.technical.items.map((item) => (
@@ -372,7 +421,9 @@ export function ServicePage({ locale, page }: { locale: Locale; page: SubPageKey
       <Section surface="inverse" spacing="md" aria-labelledby="service-contact-heading">
         <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">
-            <p className="label-section border-t border-inverse-foreground/40 pt-3">{c.home.contact.title}</p>
+            <p className="label-section border-t border-inverse-foreground/40 pt-3">
+              {c.home.contact.title}
+            </p>
             <h2 id="service-contact-heading" className="type-display-sm mt-6 text-balance">
               {c.home.contact.heading}
             </h2>

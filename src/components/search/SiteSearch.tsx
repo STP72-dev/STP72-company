@@ -154,7 +154,10 @@ export function SiteSearch({ locale }: { locale: Locale }) {
 
             {trimmed ? (
               <div className="max-h-[60vh] overflow-y-auto">
-                <p aria-live="polite" className="border-b border-border-subtle px-4 py-3 text-xs text-muted-foreground">
+                <p
+                  aria-live="polite"
+                  className="border-b border-border-subtle px-4 py-3 text-xs text-muted-foreground"
+                >
                   {c.common.searchResultsCount.replace("{count}", String(results.length))}
                 </p>
 
@@ -172,7 +175,9 @@ export function SiteSearch({ locale }: { locale: Locale }) {
                             i === active ? "bg-layer-01" : "hover:bg-layer-01",
                           )}
                         >
-                          <span className="text-sm font-medium text-foreground">{result.title}</span>
+                          <span className="text-sm font-medium text-foreground">
+                            {result.title}
+                          </span>
                           <span className="text-xs text-muted-foreground">
                             {c.common.searchGroups[result.group]}
                           </span>

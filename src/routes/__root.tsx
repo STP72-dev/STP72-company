@@ -16,8 +16,6 @@ import { DEFAULT_LOCALE, LOCALES, siteConfig } from "@/config/site";
 import { getContent } from "@/content";
 import { themeInitScript } from "@/lib/theme";
 
-
-
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -120,7 +118,6 @@ function RootShell({ children }: { children: ReactNode }) {
 
   return (
     <html lang={lang} suppressHydrationWarning>
-
       <head>
         {/* Applies the stored/system theme before first paint — no flash of wrong theme. */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
@@ -132,7 +129,6 @@ function RootShell({ children }: { children: ReactNode }) {
       </body>
     </html>
   );
-
 }
 
 function RootComponent() {

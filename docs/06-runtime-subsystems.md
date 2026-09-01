@@ -5,7 +5,7 @@
 In standard Nitro/h3 server runtimes, server-side exceptions that occur during nested SSR rendering or async route loaders are frequently caught by the framework's internal handler and converted into an opaque JSON response:
 
 ```json
-{"status": 500, "unhandled": true, "message": "HTTPError"}
+{ "status": 500, "unhandled": true, "message": "HTTPError" }
 ```
 
 When this occurs, standard `try / catch` blocks in outer fetch handlers fail to trigger, and critical debugging information (stack traces, nested error causes) is stripped from logs.
@@ -43,8 +43,9 @@ flowchart TD
     Unwrap --> ServeFallback
 ```
 
-### 1. Cause-Chain Traversal ([`src/lib/error-capture.ts`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/lib/error-capture.ts#L18-L32))
-The [`describeError`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/lib/error-capture.ts#L18) utility recursively traverses nested `cause` chains up to 5 levels deep:
+### 1. Cause-Chain Traversal ([`src/lib/error-capture.ts`](../src/lib/error-capture.ts#L18-L32))
+
+The [`describeError`](../src/lib/error-capture.ts#L18) utility recursively traverses nested `cause` chains up to 5 levels deep:
 
 ```typescript
 // File: src/lib/error-capture.ts (lines 18-32)
@@ -65,7 +66,8 @@ export function describeError(error: unknown): string {
 }
 ```
 
-### 2. Server Response Normalization ([`src/server.ts`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/server.ts#L23-L36))
+### 2. Server Response Normalization ([`src/server.ts`](../src/server.ts#L23-L36))
+
 The fetch wrapper intercepts swallowed 500 responses and replaces them with a user-friendly standalone HTML error page:
 
 ```typescript
@@ -90,7 +92,7 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
 
 ## 6.2 Client-Side In-Memory Search Indexer
 
-The site features an instant, client-side fuzzy search engine ([`src/lib/search-index.ts`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/lib/search-index.ts)) paired with a modal dialog ([`src/components/search/SiteSearch.tsx`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/search/SiteSearch.tsx)).
+The site features an instant, client-side fuzzy search engine ([`src/lib/search-index.ts`](../src/lib/search-index.ts)) paired with a modal dialog ([`src/components/search/SiteSearch.tsx`](../src/components/search/SiteSearch.tsx)).
 
 ```mermaid
 flowchart TD
@@ -107,7 +109,9 @@ flowchart TD
 ```
 
 ### 1. Multi-Group Entry Extraction
+
 The indexer compiles content into 7 distinct groups:
+
 1. `page`: Top-level navigational routes.
 2. `service`: High-level service offerings.
 3. `solution`: Flagship solution families.
@@ -116,7 +120,7 @@ The indexer compiles content into 7 distinct groups:
 6. `section`: Subsections within pages.
 7. `reference`: Public engineering demonstrator projects.
 
-### 2. Weighted Scoring Algorithm ([`src/lib/search-index.ts:L115-167`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/lib/search-index.ts#L115-L167))
+### 2. Weighted Scoring Algorithm ([`src/lib/search-index.ts:L115-167`](../src/lib/search-index.ts#L115-L167))
 
 $$ \text{Score} = \sum_{\text{token} \in \text{query}} \left( 10 \cdot \mathbb{I}_{\text{TitleMatch}}(\text{token}) + 2 \cdot \mathbb{I}_{\text{DescMatch}}(\text{token}) + \text{Bonus}_{\text{ExactPhrase}} \right) $$
 
@@ -158,12 +162,13 @@ sequenceDiagram
     React->>Local: Synchronize theme state with DOM
 ```
 
-### 1. Head Injection Script ([`src/lib/theme.ts`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/lib/theme.ts#L36-L46))
+### 1. Head Injection Script ([`src/lib/theme.ts`](../src/lib/theme.ts#L36-L46))
+
 ```javascript
 export const themeInitScript = `(function(){try{var t=localStorage.getItem("stp72-theme");var d=window.matchMedia("(prefers-color-scheme: dark)").matches;if(t==="dark"||(!t&&d)){document.documentElement.classList.add("dark");}else{document.documentElement.classList.remove("dark");}}catch(e){}})();`;
 ```
 
-Injected into [`src/routes/__root.tsx:L126`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/routes/__root.tsx#L126) inside the document `<head>`:
+Injected into [`src/routes/__root.tsx:L126`](../src/routes/__root.tsx#L126) inside the document `<head>`:
 
 ```tsx
 <head>
@@ -176,9 +181,10 @@ Injected into [`src/routes/__root.tsx:L126`](file:///home/w7-loqker/w7-workspace
 
 ## 6.4 Dynamic SEO & Hreflang Alternates Generator
 
-Search engine optimization tags are programmatically generated via [`buildLocaleHead`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/lib/seo.ts#L28-L65).
+Search engine optimization tags are programmatically generated via [`buildLocaleHead`](../src/lib/seo.ts#L28-L65).
 
 ### Automated Invariants
+
 1. **Bidirectional Canonical & Alternate Mapping**: Every Hungarian page automatically generates cross-referenced `alternate` `hreflang` tags pointing to the exact English equivalent slug (and vice versa).
 2. **`x-default` Fallback**: The default language version (`/hu`) is explicitly marked as `x-default`.
 3. **OpenGraph & Twitter Cards**: Generates localized social metadata with appropriate `og:locale` (`hu_HU` vs `en_US`).

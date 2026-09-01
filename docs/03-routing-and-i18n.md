@@ -3,6 +3,7 @@
 ## 3.1 The Invariant Key Routing Pattern
 
 Traditional internationalization (i18n) architectures often suffer from two major flaws:
+
 1. **Coupled URL Strings**: Components hardcode localized strings (`<Link to="/hu/rolunk">`), making refactoring brittle and multi-language routing error-prone.
 2. **Context-Loss on Language Switching**: Switching languages on a nested subpage (e.g. `/hu/ai-megoldasok/vallalati-tudas-ai`) often drops the user back to the foreign homepage (`/en`) because the router cannot compute the translation counterpart of the current path segment.
 
@@ -29,7 +30,7 @@ flowchart LR
     SlugEN -->|solutionKeyFromSlugs('en', 'ai-solutions', 'company-knowledge-ai')| Key
 ```
 
-Every page and solution has a single, immutable conceptual identifier defined in [`src/config/routes.ts`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/config/routes.ts) and [`src/config/solutions.ts`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/config/solutions.ts). Localized URL slugs exist only as data properties in translation lookup tables.
+Every page and solution has a single, immutable conceptual identifier defined in [`src/config/routes.ts`](../src/config/routes.ts) and [`src/config/solutions.ts`](../src/config/solutions.ts). Localized URL slugs exist only as data properties in translation lookup tables.
 
 ---
 
@@ -49,18 +50,18 @@ src/routes/
 
 ### Route Table & URL Mapping
 
-| Route File | URL Pattern | Example URL (HU) | Example URL (EN) | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| [`index.tsx`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/routes/index.tsx) | `/` | `/` | `/` | Immediate HTTP redirect to `/$locale` with `DEFAULT_LOCALE` (`hu`). |
-| [`$locale/index.tsx`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/routes/$locale/index.tsx) | `/$locale` | `/hu` | `/en` | Homepage with hero, capability matrix, forecast chart, and references. |
-| [`$locale/$slug.index.tsx`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/routes/$locale/$slug.index.tsx) | `/$locale/$slug` | `/hu/ai-megoldasok`<br>`/hu/referenciak` | `/en/ai-solutions`<br>`/en/references` | Flagship service hubs, catalogue overview, process, and supporting pages. |
-| [`$locale/$slug.$child.tsx`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/routes/$locale/$slug.$child.tsx) | `/$locale/$slug/$child` | `/hu/keszlet-es-wms`<br>`/hu/elorejelzes` | `/en/inventory-wms`<br>`/en/forecasting` | Nested solution detail pages (13 distinct technical solutions). |
+| Route File                                                           | URL Pattern             | Example URL (HU)                          | Example URL (EN)                         | Description                                                               |
+| :------------------------------------------------------------------- | :---------------------- | :---------------------------------------- | :--------------------------------------- | :------------------------------------------------------------------------ |
+| [`index.tsx`](../src/routes/index.tsx)                               | `/`                     | `/`                                       | `/`                                      | Immediate HTTP redirect to `/$locale` with `DEFAULT_LOCALE` (`hu`).       |
+| [`$locale/index.tsx`](../src/routes/$locale/index.tsx)               | `/$locale`              | `/hu`                                     | `/en`                                    | Homepage with hero, capability matrix, forecast chart, and references.    |
+| [`$locale/$slug.index.tsx`](../src/routes/$locale/$slug.index.tsx)   | `/$locale/$slug`        | `/hu/ai-megoldasok`<br>`/hu/referenciak`  | `/en/ai-solutions`<br>`/en/references`   | Flagship service hubs, catalogue overview, process, and supporting pages. |
+| [`$locale/$slug.$child.tsx`](../src/routes/$locale/$slug.$child.tsx) | `/$locale/$slug/$child` | `/hu/keszlet-es-wms`<br>`/hu/elorejelzes` | `/en/inventory-wms`<br>`/en/forecasting` | Nested solution detail pages (13 distinct technical solutions).           |
 
 ---
 
 ## 3.3 Deep Dive into Slug Resolution & Validation
 
-### 1. Conceptual Page Keys ([`src/config/routes.ts`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/config/routes.ts#L12-L56))
+### 1. Conceptual Page Keys ([`src/config/routes.ts`](../src/config/routes.ts#L12-L56))
 
 ```typescript
 // File: src/config/routes.ts (lines 12-26)
@@ -99,7 +100,8 @@ export const routeSlugs: Record<SubPageKey, Record<Locale, string>> = {
 };
 ```
 
-### 2. Nested Solution Slugs ([`src/config/solutions.ts`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/config/solutions.ts#L13-L98))
+### 2. Nested Solution Slugs ([`src/config/solutions.ts`](../src/config/solutions.ts#L13-L98))
+
 The 13 sub-solutions belong to three parent flagship families (`ai`, `business`, `data`):
 
 ```typescript
@@ -117,7 +119,7 @@ export const solutionsByFamily: Record<SolutionFamilyKey, SolutionKey[]> = {
 };
 ```
 
-The resolution function [`solutionKeyFromSlugs`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/config/solutions.ts#L88-L98) verifies both that the child slug belongs to the solution AND that the parent slug in the URL corresponds to the family owner:
+The resolution function [`solutionKeyFromSlugs`](../src/config/solutions.ts#L88-L98) verifies both that the child slug belongs to the solution AND that the parent slug in the URL corresponds to the family owner:
 
 ```typescript
 // File: src/config/solutions.ts (lines 88-98)
@@ -152,6 +154,7 @@ export const Route = createFileRoute("/$locale/$slug/$child")({
 ```
 
 ### Validation Invariants
+
 1. **Unknown Locales**: Accessing `/fr/ai-solutions` immediately throws `notFound()`.
 2. **Language Mismatch**: Accessing `/hu/ai-solutions` (English slug under Hungarian prefix) throws `notFound()`.
 3. **Invalid Hierarchy**: Accessing `/hu/uzleti-rendszerek/vallalati-tudas-ai` (AI solution under Business Systems parent) throws `notFound()`.
@@ -160,7 +163,7 @@ export const Route = createFileRoute("/$locale/$slug/$child")({
 
 ## 3.5 Navigation Topology & Information Architecture
 
-The navigation bar in [`src/components/layout/SiteHeader.tsx`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/layout/SiteHeader.tsx) divides routes into primary flagship links and secondary capabilities:
+The navigation bar in [`src/components/layout/SiteHeader.tsx`](../src/components/layout/SiteHeader.tsx) divides routes into primary flagship links and secondary capabilities:
 
 ```mermaid
 graph TD
@@ -187,8 +190,9 @@ graph TD
     MoreMenu --> M4["About Us"]
 ```
 
-### Component-Level Routing Abstraction ([`src/components/nav/PageLink.tsx`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/nav/PageLink.tsx))
-To eliminate raw strings across UI code, developers use [`PageLink`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/nav/PageLink.tsx#L23-L45) and [`SolutionLink`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/nav/PageLink.tsx#L54-L68):
+### Component-Level Routing Abstraction ([`src/components/nav/PageLink.tsx`](../src/components/nav/PageLink.tsx))
+
+To eliminate raw strings across UI code, developers use [`PageLink`](../src/components/nav/PageLink.tsx#L23-L45) and [`SolutionLink`](../src/components/nav/PageLink.tsx#L54-L68):
 
 ```tsx
 // Navigating to a top-level page

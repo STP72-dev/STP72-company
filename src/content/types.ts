@@ -62,7 +62,6 @@ export type ReferenceItem = {
   evidence?: string[];
 };
 
-
 /** Titled block list used across the service pages. */
 export type NamedBlock = { key: string; title: string; body: string };
 
@@ -95,7 +94,6 @@ export type ServicePageContent = {
   /** Restrained technical credibility block, low on the page. */
   technical: { title: string; intro: string; items: string[] };
 };
-
 
 /** Editorial content for the engineering references page. */
 export type ReferencesPageContent = {
@@ -130,16 +128,7 @@ export type ProcessPageContent = {
 
 /** Groups used to label results in the site search panel. */
 export type SearchGroup =
-  | "page"
-  | "section"
-  | "service"
-  | "solution"
-  | "solution-detail"
-  | "situation"
-  | "reference";
-
-
-
+  "page" | "section" | "service" | "solution" | "solution-detail" | "situation" | "reference";
 
 /**
  * One of the thirteen nested solution detail pages.
@@ -239,7 +228,6 @@ export type LocaleContent = {
   /** All thirteen nested solution detail pages. */
   solutionDetails: Record<SolutionKey, SolutionDetailContent>;
 
-
   common: {
     skipToContent: string;
     languageSwitch: string;
@@ -300,7 +288,6 @@ export type LocaleContent = {
       whatToVerify: string;
       close: string;
     };
-
   };
   nav: NavItem[];
   home: {

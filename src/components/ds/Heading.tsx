@@ -34,20 +34,18 @@ export function DisplayHeading({
 }
 
 /** Small structural section label. Sentence case, no tracked-out uppercase. */
-export function SectionLabel({
-  className,
-  children,
-}: {
-  className?: string;
-  children: ReactNode;
-}) {
+export function SectionLabel({ className, children }: { className?: string; children: ReactNode }) {
   return (
-    <p className={cn("label-section border-t border-border-strong pt-3 text-foreground", className)}>
+    <p
+      className={cn("label-section border-t border-border-strong pt-3 text-foreground", className)}
+    >
       {children}
     </p>
   );
 }
 
 export function Lede({ className, children }: { className?: string; children: ReactNode }) {
-  return <p className={cn("type-lede max-w-[46rem] text-muted-foreground", className)}>{children}</p>;
+  return (
+    <p className={cn("type-lede max-w-[46rem] text-muted-foreground", className)}>{children}</p>
+  );
 }

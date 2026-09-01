@@ -21,13 +21,7 @@ type AILabelProps = {
  * This is not decorative branding: never place it on marketing sections, headings
  * or cards just because the company works with AI.
  */
-export function AILabel({
-  locale,
-  whatItDid,
-  whatItUsed,
-  whatToVerify,
-  className,
-}: AILabelProps) {
+export function AILabel({ locale, whatItDid, whatItUsed, whatToVerify, className }: AILabelProps) {
   const c = getContent(locale);
   const [open, setOpen] = useState(false);
   const panelId = useId();

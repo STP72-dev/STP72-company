@@ -24,7 +24,8 @@ flowchart TD
     ServerFn -. on error .-> ErrorSanitize
 ```
 
-### 1. Cross-Site Request Forgery (CSRF) Middleware ([`src/start.ts`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/start.ts#L23-L25))
+### 1. Cross-Site Request Forgery (CSRF) Middleware ([`src/start.ts`](../src/start.ts#L23-L25))
+
 Server function invocations (`serverFn`) are safeguarded against cross-origin abuse via origin header validation:
 
 ```typescript
@@ -34,18 +35,21 @@ const csrfMiddleware = createCsrfMiddleware({
 });
 ```
 
-### 2. Information Leakage Prevention ([`src/server.ts`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/server.ts#L32-L36))
-Stack traces, internal server file paths, and environment secrets are strictly intercepted on the server. When an exception occurs, a generic, styled fallback response is returned to the user ([`renderErrorPage()`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/lib/error-page.ts)), while the full stack is output exclusively to internal server stdout/stderr.
+### 2. Information Leakage Prevention ([`src/server.ts`](../src/server.ts#L32-L36))
+
+Stack traces, internal server file paths, and environment secrets are strictly intercepted on the server. When an exception occurs, a generic, styled fallback response is returned to the user ([`renderErrorPage()`](../src/lib/error-page.ts)), while the full stack is output exclusively to internal server stdout/stderr.
 
 ---
 
 ## 8.2 Performance Engineering
 
 ### 1. Zero-Runtime Translation Overhead
-Unlike libraries that load JSON files over the network (e.g. `react-i18next`), STP72 compiles Hungarian and English dictionaries directly into the static application bundle. Content retrieval via [`getContent(locale)`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/content/index.ts#L8-L9) executes with $O(1)$ memory pointer lookup without asynchronous network fetch delays.
+
+Unlike libraries that load JSON files over the network (e.g. `react-i18next`), STP72 compiles Hungarian and English dictionaries directly into the static application bundle. Content retrieval via [`getContent(locale)`](../src/content/index.ts#L8-L9) executes with $O(1)$ memory pointer lookup without asynchronous network fetch delays.
 
 ### 2. Font Loading & Core Web Vitals (LCP / CLS)
-To achieve sub-second Largest Contentful Paint (LCP) and zero Cumulative Layout Shift (CLS), typography resources are preconnected in [`src/routes/__root.tsx`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/routes/__root.tsx#L99-L105):
+
+To achieve sub-second Largest Contentful Paint (LCP) and zero Cumulative Layout Shift (CLS), typography resources are preconnected in [`src/routes/__root.tsx`](../src/routes/__root.tsx#L99-L105):
 
 ```tsx
 // File: src/routes/__root.tsx (lines 99-105)
@@ -58,7 +62,8 @@ To achieve sub-second Largest Contentful Paint (LCP) and zero Cumulative Layout 
 ```
 
 ### 3. Route Splitting & Preload Management
-TanStack Start automatically code-splits routes by file. The router is configured with `defaultPreloadStaleTime: 0` in [`src/router.tsx:L12`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/router.tsx#L12), ensuring immediate asset preloading on hover over [`PageLink`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/nav/PageLink.tsx) components.
+
+TanStack Start automatically code-splits routes by file. The router is configured with `defaultPreloadStaleTime: 0` in [`src/router.tsx:L12`](../src/router.tsx#L12), ensuring immediate asset preloading on hover over [`PageLink`](../src/components/nav/PageLink.tsx) components.
 
 ---
 
@@ -76,7 +81,8 @@ classDiagram
 ```
 
 ### Accessibility Checkpoints
-1. **Keyboard Skip Link**: Built directly into [`PageShell.tsx:L27-31`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/layout/PageShell.tsx#L27-L31), allowing keyboard users to bypass header navigation and jump straight to the `<main id="main">` landmark.
-2. **Dual-Channel Status Glyphs**: The [`StatusIndicator`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/ds/StatusIndicator.tsx) uses both color and distinct unicode characters (`●`, `▲`, `■`, `◆`) to ensure clarity for color-blind users.
-3. **Data Visualization Screen-Reader Fallbacks**: The [`ForecastChart`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/ds/ForecastChart.tsx) embeds an accessible summary table for assistive technologies alongside the graphical Recharts SVG.
-4. **AI Transparency Accountability**: The [`AILabel`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/ds/AILabel.tsx) provides full disclosure of model operations, source context, and verification responsibilities.
+
+1. **Keyboard Skip Link**: Built directly into [`PageShell.tsx:L27-31`](../src/components/layout/PageShell.tsx#L27-L31), allowing keyboard users to bypass header navigation and jump straight to the `<main id="main">` landmark.
+2. **Dual-Channel Status Glyphs**: The [`StatusIndicator`](../src/components/ds/StatusIndicator.tsx) uses both color and distinct unicode characters (`●`, `▲`, `■`, `◆`) to ensure clarity for color-blind users.
+3. **Data Visualization Screen-Reader Fallbacks**: The [`ForecastChart`](../src/components/ds/ForecastChart.tsx) embeds an accessible summary table for assistive technologies alongside the graphical Recharts SVG.
+4. **AI Transparency Accountability**: The [`AILabel`](../src/components/ds/AILabel.tsx) provides full disclosure of model operations, source context, and verification responsibilities.

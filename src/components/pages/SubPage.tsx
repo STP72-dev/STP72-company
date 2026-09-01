@@ -76,7 +76,9 @@ export function SubPage({ locale, page }: { locale: Locale; page: SubPageKey }) 
       <Section surface="inverse" spacing="md">
         <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">
-            <SectionLabel className="border-inverse-foreground/40 text-inverse-foreground">{c.home.contact.title}</SectionLabel>
+            <SectionLabel className="border-inverse-foreground/40 text-inverse-foreground">
+              {c.home.contact.title}
+            </SectionLabel>
             <DisplayHeading size="sm" className="mt-6 text-inverse-foreground">
               {c.home.contact.heading}
             </DisplayHeading>

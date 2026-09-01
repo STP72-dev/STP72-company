@@ -19,7 +19,13 @@ export function ReferencesPage({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <PageHero locale={locale} page="references" eyebrow={r.eyebrow} summary={r.summary} withCta={false} />
+      <PageHero
+        locale={locale}
+        page="references"
+        eyebrow={r.eyebrow}
+        summary={r.summary}
+        withCta={false}
+      />
 
       {/* How to read the material */}
       <Section surface="layer" spacing="md" aria-labelledby="how-to-read-heading">

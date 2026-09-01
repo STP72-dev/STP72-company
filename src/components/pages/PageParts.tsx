@@ -105,7 +105,9 @@ export function ContactBand({ locale, headingId }: { locale: Locale; headingId: 
     <Section surface="inverse" spacing="md" aria-labelledby={headingId}>
       <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
         <div className="lg:col-span-8">
-          <p className="label-section border-t border-inverse-foreground/40 pt-3">{c.home.contact.title}</p>
+          <p className="label-section border-t border-inverse-foreground/40 pt-3">
+            {c.home.contact.title}
+          </p>
           <h2 id={headingId} className="type-display-sm mt-6 text-balance">
             {c.home.contact.heading}
           </h2>

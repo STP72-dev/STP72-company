@@ -4,9 +4,7 @@ import { solutionPath, type SolutionKey } from "@/config/solutions";
 import type { SeoContent } from "@/content/types";
 
 type MetaTag =
-  | { title: string }
-  | { name: string; content: string }
-  | { property: string; content: string };
+  { title: string } | { name: string; content: string } | { property: string; content: string };
 
 type LinkTag = { rel: string; href: string; hrefLang?: string };
 

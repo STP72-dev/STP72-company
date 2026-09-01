@@ -1,0 +1,282 @@
+{
+  "meta": {
+    "repo_name": "STP72-company",
+    "repo_url": "https://github.com/STP72-dev/STP72-company",
+    "analyzed_at": "2026-08-31T00:00:00+02:00",
+    "research_depth": "deep",
+    "incremental": false,
+    "skill_version": "1.0.0"
+  },
+  "classification": {
+    "repo_type": "localized-ssr-web-platform",
+    "confidence": 0.97,
+    "signals": [
+      "TanStack Start SSR entry and middleware",
+      "file-based localized routes",
+      "typed Hungarian and English content dictionaries",
+      "page and solution catalogue templates",
+      "Docker and CI/CD deployment pipeline"
+    ],
+    "scores": {
+      "localized-ssr-web-platform": 0.97,
+      "workflow-orchestrator": 0.05,
+      "agent-framework": 0.0,
+      "prompt-library": 0.0,
+      "eval-harness": 0.0
+    }
+  },
+  "stats": {
+    "total_files_scanned": 135,
+    "files_analyzed": 127,
+    "files_skipped": 8,
+    "patterns_detected": 10,
+    "research_queries": 8,
+    "research_findings": 5
+  },
+  "patterns": [
+    {
+      "id": "PAT_001",
+      "type": "config-driven",
+      "name": "Localized route registry",
+      "description": "Stable page keys and solution keys resolve to locale-specific URL segments.",
+      "files": ["src/config/routes.ts", "src/config/solutions.ts"],
+      "evidence": "pagePath, solutionPath, pageKeyFromSlug and solutionKeyFromSlugs",
+      "frameworks": ["TanStack Router"],
+      "connections": ["PAT_003", "PAT_005"],
+      "confidence": "high"
+    },
+    {
+      "id": "PAT_002",
+      "type": "typed-schema",
+      "name": "Bilingual content engine",
+      "description": "All visitor-facing data is supplied by complete locale dictionaries checked against TypeScript contracts.",
+      "files": ["src/content/types.ts", "src/content/hu.ts", "src/content/en.ts"],
+      "evidence": "LocaleContent and getContent",
+      "frameworks": ["TypeScript"],
+      "connections": ["PAT_004", "PAT_006"],
+      "confidence": "high"
+    },
+    {
+      "id": "PAT_003",
+      "type": "routing",
+      "name": "Guarded reverse slug resolution",
+      "description": "Incoming localized paths must map back to the correct page or parent/child solution key or become 404s.",
+      "files": ["src/routes/$locale/$slug.index.tsx", "src/routes/$locale/$slug.$child.tsx"],
+      "evidence": "beforeLoad guards",
+      "frameworks": ["TanStack Router"],
+      "connections": ["PAT_001"],
+      "confidence": "high"
+    },
+    {
+      "id": "PAT_004",
+      "type": "template",
+      "name": "Shared editorial page templates",
+      "description": "Generic, service, catalogue, detail, references, and process components render structured content instead of individual page code.",
+      "files": ["src/components/pages", "src/routes/$locale/$slug.index.tsx"],
+      "evidence": "conditional page-template dispatch",
+      "frameworks": ["React"],
+      "connections": ["PAT_002"],
+      "confidence": "high"
+    },
+    {
+      "id": "PAT_005",
+      "type": "derived-metadata",
+      "name": "Taxonomy-derived localized SEO",
+      "description": "Canonical and alternate URL tags use the same route and solution mappings as navigation.",
+      "files": ["src/lib/seo.ts"],
+      "evidence": "buildLocaleHead",
+      "frameworks": ["TanStack Router"],
+      "connections": ["PAT_001"],
+      "confidence": "high"
+    },
+    {
+      "id": "PAT_006",
+      "type": "client-index",
+      "name": "Content-derived local search",
+      "description": "A locale-specific index is built in the browser and scored accent-insensitively by title/body relevance.",
+      "files": ["src/lib/search-index.ts", "src/components/search/SiteSearch.tsx"],
+      "evidence": "buildSearchIndex and searchEntries",
+      "frameworks": ["React"],
+      "connections": ["PAT_001", "PAT_002"],
+      "confidence": "high"
+    },
+    {
+      "id": "PAT_007",
+      "type": "design-system",
+      "name": "Semantic CSS tokens and persisted theme",
+      "description": "Tailwind v4 maps semantic tokens to light/dark CSS values; a pre-paint script and provider prevent theme flash.",
+      "files": ["src/styles.css", "src/lib/theme.ts", "src/components/theme/ThemeProvider.tsx"],
+      "evidence": "@theme inline and themeInitScript",
+      "frameworks": ["Tailwind CSS"],
+      "connections": [],
+      "confidence": "high"
+    },
+    {
+      "id": "PAT_008",
+      "type": "error-handling",
+      "name": "SSR fault containment",
+      "description": "Request middleware and a custom Nitro entry return safe HTML for unexpected errors, including swallowed h3 errors.",
+      "files": ["src/start.ts", "src/server.ts", "src/lib/error-capture.ts"],
+      "evidence": "normalizeCatastrophicSsrResponse and errorMiddleware",
+      "frameworks": ["TanStack Start", "Nitro"],
+      "connections": ["PAT_009"],
+      "confidence": "high"
+    },
+    {
+      "id": "PAT_009",
+      "type": "delivery",
+      "name": "Containerized AWS pipeline",
+      "description": "A multi-stage Bun/Node image is validated and pushed through GitHub OIDC to ECR, then deploys an ECS Express Mode service.",
+      "files": ["Dockerfile", "docker-compose.yml", ".github/workflows/deploy-aws.yml"],
+      "evidence": "NITRO_PRESET=node-server and amazon-ecs-deploy-express-service",
+      "frameworks": ["GitHub Actions", "Amazon ECS Express Mode"],
+      "connections": ["PAT_008"],
+      "confidence": "high"
+    },
+    {
+      "id": "PAT_010",
+      "type": "transparency",
+      "name": "AI output disclosure primitive",
+      "description": "Future AI output can disclose task, source category, and verification steps without treating AI as decorative branding.",
+      "files": ["src/components/ds/AILabel.tsx"],
+      "evidence": "AILabel props and disclosure dialog",
+      "frameworks": ["React"],
+      "connections": ["PAT_002"],
+      "confidence": "high"
+    }
+  ],
+  "key_files": [
+    {
+      "path": "src/config/routes.ts",
+      "purpose": "page keys, localized slugs and navigation taxonomy",
+      "relevance_score": 10.0,
+      "patterns": ["PAT_001", "PAT_003"]
+    },
+    {
+      "path": "src/config/solutions.ts",
+      "purpose": "solution family taxonomy and nested localized paths",
+      "relevance_score": 10.0,
+      "patterns": ["PAT_001", "PAT_003"]
+    },
+    {
+      "path": "src/content/types.ts",
+      "purpose": "content completeness and shape contracts",
+      "relevance_score": 10.0,
+      "patterns": ["PAT_002"]
+    },
+    {
+      "path": "src/components/nav/PageLink.tsx",
+      "purpose": "only typed page and solution navigation boundary",
+      "relevance_score": 9.5,
+      "patterns": ["PAT_001", "PAT_003"]
+    },
+    {
+      "path": "src/routes/$locale/$slug.index.tsx",
+      "purpose": "validated localized page routing and template dispatch",
+      "relevance_score": 9.5,
+      "patterns": ["PAT_003", "PAT_004", "PAT_005"]
+    },
+    {
+      "path": "src/routes/$locale/$slug.$child.tsx",
+      "purpose": "validated solution-detail routing",
+      "relevance_score": 9.5,
+      "patterns": ["PAT_003", "PAT_005"]
+    },
+    {
+      "path": "src/server.ts",
+      "purpose": "custom SSR entry and 500 normalization",
+      "relevance_score": 9.0,
+      "patterns": ["PAT_008"]
+    },
+    {
+      "path": "src/start.ts",
+      "purpose": "request error and CSRF middleware",
+      "relevance_score": 9.0,
+      "patterns": ["PAT_008"]
+    },
+    {
+      "path": "src/lib/seo.ts",
+      "purpose": "metadata derived from route taxonomy",
+      "relevance_score": 8.5,
+      "patterns": ["PAT_005"]
+    },
+    {
+      "path": "src/lib/search-index.ts",
+      "purpose": "localized client search index and scorer",
+      "relevance_score": 8.5,
+      "patterns": ["PAT_006"]
+    },
+    {
+      "path": "src/styles.css",
+      "purpose": "global visual token system",
+      "relevance_score": 8.5,
+      "patterns": ["PAT_007"]
+    },
+    {
+      "path": ".github/workflows/deploy-aws.yml",
+      "purpose": "quality gate and cloud delivery",
+      "relevance_score": 8.0,
+      "patterns": ["PAT_009"]
+    }
+  ],
+  "dependencies": {
+    "frameworks": ["TanStack Start", "TanStack Router", "React", "Vite", "Nitro", "Tailwind CSS"],
+    "libraries": ["React Query", "Radix UI", "Zod", "Lucide React", "Recharts"],
+    "external_services": [
+      "Google Fonts",
+      "GitHub Actions",
+      "Amazon ECR",
+      "Amazon ECS Express Mode"
+    ],
+    "runtime": ["Node.js 20+ or Bun 1.2+", "Nitro node-server output in container"]
+  },
+  "research": {
+    "queries": [
+      {
+        "query": "TanStack Router file-based routing",
+        "pattern_id": "PAT_003",
+        "results_count": 1,
+        "top_finding": "supported bundlers generate route configuration from route files",
+        "source_url": "https://tanstack.com/router/latest/docs/routing/file-based-routing"
+      },
+      {
+        "query": "TanStack Start server functions CSRF middleware",
+        "pattern_id": "PAT_008",
+        "results_count": 1,
+        "top_finding": "custom start.ts must explicitly re-add CSRF middleware",
+        "source_url": "https://tanstack.com/start/latest/docs/framework/react/guide/server-functions"
+      },
+      {
+        "query": "Tailwind CSS v4 theme variables",
+        "pattern_id": "PAT_007",
+        "results_count": 1,
+        "top_finding": "@theme variables generate utility APIs",
+        "source_url": "https://tailwindcss.com/docs/theme"
+      },
+      {
+        "query": "AWS App Runner availability change and ECS Express Mode deployment",
+        "pattern_id": "PAT_009",
+        "results_count": 1,
+        "top_finding": "ECS Express Mode is the recommended managed-container path for new customers after App Runner closed to new customers in 2026",
+        "source_url": "https://docs.aws.amazon.com/apprunner/latest/dg/apprunner-availability-change.html"
+      }
+    ],
+    "best_practices": [
+      "Do not manually edit generated route trees.",
+      "Keep CSRF middleware when owning Start configuration.",
+      "Preserve CSS token mapping instead of distributing raw visual values.",
+      "Configure ECR, GitHub OIDC, and ECS Express Mode prerequisites before deployment provisioning."
+    ],
+    "alternatives": [
+      "Use standard ECS/Fargate only if ECS Express Mode is unavailable in the target account and region."
+    ]
+  },
+  "outputs": {
+    "overview": "overview.md",
+    "logic_map": "logic-map.md",
+    "diagrams": "diagrams.md",
+    "research_notes": "research-notes.md",
+    "context": "context.md",
+    "summary_card": "summary-card.md"
+  }
+}

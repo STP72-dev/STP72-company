@@ -1,30 +1,23 @@
 # syntax=docker/dockerfile:1
 
 # -----------------------------------------------------------------------------
-# Stage 1: Dependencies Cache
+# Stage 1: Deterministic Builder
 # -----------------------------------------------------------------------------
-FROM node:24-slim AS deps
+FROM oven/bun:1.2.22-slim AS builder
 WORKDIR /app
 
-# Copy package manifests for deterministic caching
-COPY package.json ./
-# Install dependencies (ignoring scripts during initial resolution for security)
-RUN npm install --ignore-scripts
+# Copy the complete Bun dependency contract before application code to maximize
+# Docker layer reuse.  bun.lock is the only supported dependency lockfile.
+COPY package.json bun.lock bunfig.toml ./
+RUN bun install --frozen-lockfile --ignore-scripts
 
-# -----------------------------------------------------------------------------
-# Stage 2: Application Builder
-# -----------------------------------------------------------------------------
-FROM node:24-slim AS builder
-WORKDIR /app
-
-# Copy installed dependencies from deps stage
-COPY --from=deps /app/node_modules ./node_modules
+# Copy application code only after dependency installation.
 COPY . .
 
 # Set production environment and compile SSR bundles via Vite & Nitro
 ENV NODE_ENV=production
 ENV NITRO_PRESET=node-server
-RUN npm run build
+RUN bun run build
 
 # -----------------------------------------------------------------------------
 # Stage 3: Production Minimal Runner

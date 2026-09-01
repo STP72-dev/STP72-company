@@ -196,7 +196,10 @@ export function SolutionDetailPage({
             </div>
             <ul className="lg:col-span-6 lg:col-start-7">
               {evidence.map((item) => (
-                <li key={item.key} className="border-t border-border py-6 first:border-t-0 first:pt-0">
+                <li
+                  key={item.key}
+                  className="border-t border-border py-6 first:border-t-0 first:pt-0"
+                >
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
                     <h3 className="text-base font-semibold text-foreground">{item.name}</h3>
                     <StatusIndicator

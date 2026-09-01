@@ -10,7 +10,6 @@ import { ReferencesPage } from "@/components/pages/ReferencesPage";
 import { ProcessPage } from "@/components/pages/ProcessPage";
 import { SolutionsPage } from "@/components/pages/SolutionsPage";
 
-
 /**
  * Every localized destination page.
  * The slug is resolved through the central route registry, so an unknown slug —
@@ -56,5 +55,3 @@ function LocalePage() {
     </PageShell>
   );
 }
-
-

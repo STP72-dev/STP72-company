@@ -43,7 +43,6 @@
   --color-interactive-active: var(--interactive-active);
   --color-focus: var(--ring);
 
-
   --ease-system: cubic-bezier(0.2, 0, 0.38, 0.9);
 
   /* Near-zero radius across the system */
@@ -119,7 +118,6 @@
   --interactive: oklch(0.47 0.168 258);
   --interactive-hover: oklch(0.41 0.16 258);
   --interactive-active: oklch(0.34 0.14 258);
-
 
   --primary: oklch(0.47 0.168 258);
   --primary-foreground: oklch(1 0 0);
@@ -198,7 +196,6 @@
   --overlay: oklch(0.11 0.004 260 / 70%);
   --inverse-foreground: oklch(0.97 0.001 260);
 
-
   --destructive: oklch(0.62 0.19 25);
   --destructive-foreground: oklch(1 0 0);
 
@@ -207,7 +204,6 @@
   --border-strong: oklch(1 0 0 / 34%);
   --input: oklch(1 0 0 / 34%);
   --ring: oklch(0.82 0.07 258);
-
 
   --chart-1: oklch(0.68 0.16 258);
   --chart-2: oklch(0.74 0.004 260);

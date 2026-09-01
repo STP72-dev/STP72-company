@@ -14,13 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 type SiteHeaderProps = {
   locale: Locale;
@@ -42,8 +36,7 @@ export function SiteHeader({ locale, page, solution }: SiteHeaderProps) {
   // Close the drawer whenever the route changes.
   useEffect(() => setOpen(false), [locale, page, solution]);
 
-  const label = (key: PageKey) =>
-    key === "home" ? c.common.homeLabel : c.pages[key].navLabel;
+  const label = (key: PageKey) => (key === "home" ? c.common.homeLabel : c.pages[key].navLabel);
 
   const moreIsActive = navMore.includes(page);
 

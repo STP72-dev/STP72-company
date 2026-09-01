@@ -13,8 +13,7 @@ const buttonVariants = cva(
         destructive:
           "justify-center bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline: "justify-center border border-input bg-transparent hover:bg-layer-01",
-        secondary:
-          "justify-center bg-secondary text-secondary-foreground hover:bg-layer-02",
+        secondary: "justify-center bg-secondary text-secondary-foreground hover:bg-layer-02",
         ghost: "justify-center hover:bg-layer-01 hover:text-foreground",
         link: "justify-center text-link underline-offset-4 hover:underline",
         /** Emphasis 1 — the single dominant action in a context. Solid accent. */
@@ -39,9 +38,6 @@ const buttonVariants = cva(
     },
   },
 );
-
-
-
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {

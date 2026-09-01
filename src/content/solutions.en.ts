@@ -1,8 +1,4 @@
-import type {
-  SolutionDetailContent,
-  SolutionFamilyContent,
-  SolutionsPageContent,
-} from "./types";
+import type { SolutionDetailContent, SolutionFamilyContent, SolutionsPageContent } from "./types";
 import type { SolutionFamilyKey, SolutionKey } from "@/config/solutions";
 
 /** English solution catalogue: three families, thirteen sub-solutions. */

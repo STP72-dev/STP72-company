@@ -50,7 +50,13 @@ export function HomePage({ locale }: { locale: Locale }) {
                 <Button variant="cta" size="lg" asChild>
                   <a href={mailto}>
                     {c.home.hero.primaryCta}
-                    <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.25">
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.25"
+                    >
                       <path d="M3 8h9.5M9 4.5 12.5 8 9 11.5" />
                     </svg>
                   </a>
@@ -58,7 +64,13 @@ export function HomePage({ locale }: { locale: Locale }) {
                 <Button variant="technical" size="lg" asChild>
                   <a href="#megoldasok">
                     {c.home.hero.secondaryCta}
-                    <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.25">
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.25"
+                    >
                       <path d="M8 3v9.5M4.5 9l3.5 3.5L11.5 9" />
                     </svg>
                   </a>
@@ -110,7 +122,14 @@ export function HomePage({ locale }: { locale: Locale }) {
               className="mt-6 inline-flex items-center gap-2 border-b border-transparent pb-0.5 text-sm font-medium text-link hover:border-current"
             >
               <span>{c.home.architecture.cta}</span>
-              <svg aria-hidden="true" viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.25">
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 16 16"
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.25"
+              >
                 <path d="M3 8h9.5M9 4.5 12.5 8 9 11.5" />
               </svg>
             </PageLink>
@@ -298,7 +317,10 @@ export function HomePage({ locale }: { locale: Locale }) {
 
           <ul className="lg:col-span-7 lg:col-start-6">
             {c.home.references.items.map((item) => (
-              <li key={item.key} className="border-t border-border py-6 first:border-t-0 first:pt-0">
+              <li
+                key={item.key}
+                className="border-t border-border py-6 first:border-t-0 first:pt-0"
+              >
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
                   <h3 className="text-base font-semibold text-foreground">{item.name}</h3>
                   <StatusIndicator
@@ -341,13 +363,23 @@ export function HomePage({ locale }: { locale: Locale }) {
               className="inline-flex h-12 items-center justify-between gap-6 bg-accent px-4 text-sm font-medium text-accent-foreground hover:bg-interactive-hover"
             >
               {c.home.contact.cta}
-              <svg aria-hidden="true" viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.25">
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 16 16"
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.25"
+              >
                 <path d="M3 8h9.5M9 4.5 12.5 8 9 11.5" />
               </svg>
             </a>
             <p className="mt-6 text-sm text-inverse-foreground/75">
               {c.common.emailLabel}:{" "}
-              <a href={mailto} className="border-b border-inverse-foreground/40 hover:border-current">
+              <a
+                href={mailto}
+                className="border-b border-inverse-foreground/40 hover:border-current"
+              >
                 {siteConfig.contact.email}
               </a>
             </p>

@@ -72,7 +72,10 @@ export function buildSearchIndex(locale: Locale): SearchEntry[] {
     entries.push({
       id: `solution-family-${family}`,
       title: c.solutionFamilies[family].label,
-      description: [c.solutionFamilies[family].description, ...c.solutionFamilies[family].when].join(" "),
+      description: [
+        c.solutionFamilies[family].description,
+        ...c.solutionFamilies[family].when,
+      ].join(" "),
       page: familyParentPage[family],
       group: "solution",
     });
@@ -111,7 +114,6 @@ export function buildSearchIndex(locale: Locale): SearchEntry[] {
       group: "reference",
     });
   }
-
 
   // Secondary results: homepage sections, still reachable by anchor.
   for (const item of c.home.situations.items) {

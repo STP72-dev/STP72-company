@@ -27,16 +27,20 @@ const spread = [0, 4, 7, 10, 14];
 const maxY = 100;
 const totalPoints = actuals.length + forecast.length - 1;
 
-const x = (i: number) =>
-  PAD.left + (i / totalPoints) * (W - PAD.left - PAD.right);
+const x = (i: number) => PAD.left + (i / totalPoints) * (W - PAD.left - PAD.right);
 const y = (v: number) => PAD.top + (1 - v / maxY) * (H - PAD.top - PAD.bottom);
 
 const toPath = (values: number[], offset = 0) =>
-  values.map((v, i) => `${i === 0 ? "M" : "L"}${x(i + offset).toFixed(1)} ${y(v).toFixed(1)}`).join(" ");
+  values
+    .map((v, i) => `${i === 0 ? "M" : "L"}${x(i + offset).toFixed(1)} ${y(v).toFixed(1)}`)
+    .join(" ");
 
 const bandPath = () => {
   const offset = actuals.length - 1;
-  const upper = forecast.map((v, i) => `${i === 0 ? "M" : "L"}${x(i + offset).toFixed(1)} ${y(Math.min(maxY, v + spread[i]!)).toFixed(1)}`);
+  const upper = forecast.map(
+    (v, i) =>
+      `${i === 0 ? "M" : "L"}${x(i + offset).toFixed(1)} ${y(Math.min(maxY, v + spread[i]!)).toFixed(1)}`,
+  );
   const lower = forecast
     .map((v, i) => `L${x(i + offset).toFixed(1)} ${y(Math.max(0, v - spread[i]!)).toFixed(1)}`)
     .reverse();
@@ -62,7 +66,6 @@ export function ForecastChart({
       <div className="pt-4">
         <figcaption className="text-sm font-semibold text-foreground">{title}</figcaption>
         <ul className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-muted-foreground">
-
           <li className="flex items-center gap-2">
             <span aria-hidden="true" className="h-0.5 w-5 bg-foreground" />
             {actualLabel}
@@ -148,12 +151,7 @@ export function ForecastChart({
             stroke="var(--color-border-strong)"
             strokeWidth="1"
           />
-          <text
-            x={PAD.left}
-            y={H - 10}
-            className="fill-muted-foreground font-mono"
-            fontSize="10"
-          >
+          <text x={PAD.left} y={H - 10} className="fill-muted-foreground font-mono" fontSize="10">
             {xAxisLabel}
           </text>
           <text

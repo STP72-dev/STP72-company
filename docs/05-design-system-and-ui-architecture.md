@@ -28,9 +28,9 @@ mindmap
 
 ## 5.2 Tailwind CSS v4 Engine & OKLCH Token Geometry
 
-The styling foundation is configured via **Tailwind CSS v4** in [`src/styles.css`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/styles.css). All color values use perceptual `oklch(...)` notation, ensuring uniform lightness and chroma scaling across light and dark modes.
+The styling foundation is configured via **Tailwind CSS v4** in [`src/styles.css`](../src/styles.css). All color values use perceptual `oklch(...)` notation, ensuring uniform lightness and chroma scaling across light and dark modes.
 
-### Theme Token Mapping ([`src/styles.css:L17-91`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/styles.css#L17-L91))
+### Theme Token Mapping ([`src/styles.css:L17-91`](../src/styles.css#L17-L91))
 
 ```css
 @theme inline {
@@ -41,7 +41,7 @@ The styling foundation is configured via **Tailwind CSS v4** in [`src/styles.css
   --color-layer-01: var(--layer-01);
   --color-layer-02: var(--layer-02);
   --color-layer-03: var(--layer-03);
-  
+
   /* Semantic status roles */
   --color-support-error: var(--support-error);
   --color-support-warning: var(--support-warning);
@@ -58,21 +58,22 @@ The styling foundation is configured via **Tailwind CSS v4** in [`src/styles.css
 
 ### Light vs Dark Surface Palette
 
-| Variable | Token Role | Light Mode (OKLCH) | Dark Mode (OKLCH) |
-| :--- | :--- | :--- | :--- |
-| `--background` | Base Canvas | `oklch(1 0 0)` (Pure White) | `oklch(0.14 0.005 260)` (Deep Charcoal) |
-| `--layer-01` | Section Surface | `oklch(0.968 0.002 260)` | `oklch(0.18 0.005 260)` |
-| `--layer-02` | Tile / Card Surface | `oklch(0.938 0.003 260)` | `oklch(0.22 0.005 260)` |
-| `--layer-03` | Modal / Overlay | `oklch(0.89 0.004 260)` | `oklch(0.27 0.005 260)` |
-| `--foreground` | Primary Typography | `oklch(0.19 0.005 260)` | `oklch(0.96 0.002 260)` |
-| `--accent` | Controlled Accent | `oklch(0.48 0.22 260)` (Cobalt Blue) | `oklch(0.68 0.18 255)` (Electric Blue) |
+| Variable       | Token Role          | Light Mode (OKLCH)                   | Dark Mode (OKLCH)                       |
+| :------------- | :------------------ | :----------------------------------- | :-------------------------------------- |
+| `--background` | Base Canvas         | `oklch(1 0 0)` (Pure White)          | `oklch(0.14 0.005 260)` (Deep Charcoal) |
+| `--layer-01`   | Section Surface     | `oklch(0.968 0.002 260)`             | `oklch(0.18 0.005 260)`                 |
+| `--layer-02`   | Tile / Card Surface | `oklch(0.938 0.003 260)`             | `oklch(0.22 0.005 260)`                 |
+| `--layer-03`   | Modal / Overlay     | `oklch(0.89 0.004 260)`              | `oklch(0.27 0.005 260)`                 |
+| `--foreground` | Primary Typography  | `oklch(0.19 0.005 260)`              | `oklch(0.96 0.002 260)`                 |
+| `--accent`     | Controlled Accent   | `oklch(0.48 0.22 260)` (Cobalt Blue) | `oklch(0.68 0.18 255)` (Electric Blue)  |
 
 ---
 
-## 5.3 Custom Design System Primitives ([`src/components/ds/`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/ds/))
+## 5.3 Custom Design System Primitives ([`src/components/ds/`](../src/components/ds/))
 
-### 1. AI Transparency Disclosure ([`AILabel.tsx`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/ds/AILabel.tsx))
-Whenever an AI-driven capability or model artifact is displayed, the [`AILabel`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/ds/AILabel.tsx#L32-L93) component provides interactive, accessible disclosure:
+### 1. AI Transparency Disclosure ([`AILabel.tsx`](../src/components/ds/AILabel.tsx))
+
+Whenever an AI-driven capability or model artifact is displayed, the [`AILabel`](../src/components/ds/AILabel.tsx#L32-L93) component provides interactive, accessible disclosure:
 
 ```tsx
 // File: src/components/ds/AILabel.tsx
@@ -84,25 +85,27 @@ Whenever an AI-driven capability or model artifact is displayed, the [`AILabel`]
 />
 ```
 
-* **UI Element**: Renders a discrete mono badge (`[AI]`) with an interactive popover detailing:
+- **UI Element**: Renders a discrete mono badge (`[AI]`) with an interactive popover detailing:
   1. Exactly what task the model performed.
   2. The input data and context provided to the model.
   3. The mandatory human verification steps required before acting on the output.
 
-### 2. Multi-Modal Status Indicator ([`StatusIndicator.tsx`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/ds/StatusIndicator.tsx))
+### 2. Multi-Modal Status Indicator ([`StatusIndicator.tsx`](../src/components/ds/StatusIndicator.tsx))
+
 To comply with WCAG 2.1 Color-Blindness standards, status indicators pair distinct colors with geometric symbols:
 
 ```typescript
 // File: src/components/ds/StatusIndicator.tsx (lines 14-19)
 const GLYPHS: Record<StatusType, string> = {
-  active: "●",      // Filled circle (Success / Live)
-  planned: "▲",     // Triangle (In Development)
-  prototype: "■",   // Square (Experimental)
-  deprecated: "◆",  // Diamond (Legacy)
+  active: "●", // Filled circle (Success / Live)
+  planned: "▲", // Triangle (In Development)
+  prototype: "■", // Square (Experimental)
+  deprecated: "◆", // Diamond (Legacy)
 };
 ```
 
-### 3. Forecast Time-Series Chart ([`ForecastChart.tsx`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/ds/ForecastChart.tsx))
+### 3. Forecast Time-Series Chart ([`ForecastChart.tsx`](../src/components/ds/ForecastChart.tsx))
+
 Visualizes statistical demand and capacity projections using Recharts:
 
 ```mermaid
@@ -116,15 +119,16 @@ flowchart LR
     Split --> Band
 ```
 
-* **Responsive SVG**: Dynamically adapts between mobile (400px) and desktop viewports.
-* **Accessible Fallback**: Provides a structured `sr-only` table summary of data points for screen readers.
+- **Responsive SVG**: Dynamically adapts between mobile (400px) and desktop viewports.
+- **Accessible Fallback**: Provides a structured `sr-only` table summary of data points for screen readers.
 
-### 4. Service Architectural Flow ([`FlowDiagram.tsx`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/ds/FlowDiagram.tsx))
+### 4. Service Architectural Flow ([`FlowDiagram.tsx`](../src/components/ds/FlowDiagram.tsx))
+
 Renders multi-stage pipeline architectures (Input $\rightarrow$ Processing $\rightarrow$ Output) with tone indicators (`context`, `core`, `outcome`), ensuring visual scanning clarity across complex integrations.
 
 ---
 
-## 5.4 Layout Scaffolding Components ([`src/components/layout/`](file:///home/w7-loqker/w7-workspace/selfbase/@stp72.com/repos/STP72-company/src/components/layout/))
+## 5.4 Layout Scaffolding Components ([`src/components/layout/`](../src/components/layout/))
 
 ```
 src/components/layout/
@@ -136,6 +140,7 @@ src/components/layout/
 ```
 
 ### Grid & Section Discipline
+
 Sections use alternating surface backgrounds (`background` vs `layer`) to create natural visual grouping without intrusive divider rules:
 
 ```tsx

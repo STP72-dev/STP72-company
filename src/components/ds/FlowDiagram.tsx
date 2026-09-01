@@ -18,7 +18,14 @@ const toneCell: Record<NonNullable<DiagramStage["tone"]>, string> = {
 };
 
 const Chevron = () => (
-  <svg aria-hidden="true" viewBox="0 0 16 16" className="h-3 w-3 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth="1.25">
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 16 16"
+    className="h-3 w-3 text-muted-foreground"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.25"
+  >
     <path d="M8 3v9.5M4.5 9 8 12.5 11.5 9" />
   </svg>
 );
@@ -42,12 +49,19 @@ export function FlowDiagram({ stages, description, aside, className }: FlowDiagr
           <ol className="flex flex-col">
             {stages.map((stage, index) => (
               <li key={stage.key} className="flex flex-col">
-                <div className={cn("border border-border-strong p-4 md:p-5", toneCell[stage.tone ?? "core"])}>
+                <div
+                  className={cn(
+                    "border border-border-strong p-4 md:p-5",
+                    toneCell[stage.tone ?? "core"],
+                  )}
+                >
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                     <span className="font-mono text-xs text-muted-foreground">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="text-sm font-semibold text-foreground md:text-base">{stage.label}</span>
+                    <span className="text-sm font-semibold text-foreground md:text-base">
+                      {stage.label}
+                    </span>
                     {stage.tag ? (
                       <span className="border border-border px-1.5 font-mono text-[0.6875rem] uppercase tracking-wide text-muted-foreground">
                         {stage.tag}
@@ -56,7 +70,9 @@ export function FlowDiagram({ stages, description, aside, className }: FlowDiagr
                   </div>
 
                   {stage.detail ? (
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{stage.detail}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {stage.detail}
+                    </p>
                   ) : null}
 
                   {stage.items?.length ? (

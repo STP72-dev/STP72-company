@@ -1,109 +1,94 @@
-# Architecture & Execution Plan: Docker Containerization & AWS Cloud Deployment
+# Approved Plan: Deterministic Containers and AWS ECS Express Mode
 
-## 1. Executive Problem Statement & Objectives
+> **Status:** repository implementation complete; AWS/GitHub prerequisite configuration pending
+>
+> **Decision date:** 2026-08-31
+>
+> **Scope:** deployment planning and documentation only. No AWS resource was created by this plan.
 
-The goal is to provide a complete, enterprise-ready, containerized distribution of **STP72 Foundation** (`STP72-company`) that supports:
-1. **Zero-Configuration Local Deployment**: A developer or operator can clone the repo and run the full SSR application locally via Docker & Docker Compose with full dependency encapsulation and health verification.
-2. **Automated AWS Cloud Deployment from GitHub**: A secure, modern CI/CD pipeline using **GitHub Actions** with **OpenID Connect (OIDC)** (no long-lived AWS static credentials) to build multi-arch container images, push to **Amazon ECR**, and deploy to a cloud compute target with zero downtime.
+## 1. Executive Decision
 
----
+STP72 Foundation will use **Amazon ECS Express Mode** backed by a private Amazon ECR repository in `eu-central-1`. This replaces the earlier App Runner-first plan.
 
-## 2. Research & Evaluation of Options
+AWS App Runner is closed to new customers. Its continuation therefore depends on prior account eligibility, which this account does not need to rely on. AWS recommends ECS Express Mode as its App Runner migration path; Express Mode accepts a container image and provisions the ECS-on-Fargate service, Application Load Balancer, networking, and autoscaling defaults. See the [AWS availability change](https://docs.aws.amazon.com/apprunner/latest/dg/apprunner-availability-change.html) and [ECS Express Mode guide](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/express-service-create-full.html).
 
-### A. Container Base Image & Runtime Strategy
+**Canonical package manager: Bun.** `bun.lock` and `bunfig.toml` are already committed and configure a 24-hour minimum release age for supply-chain protection. Future local, CI, and container build installation must use Bun's frozen lockfile mode. Node.js 24 remains the production runtime for the Nitro server.
 
-| Strategy | Base Image | Build Size | Build Speed | Security & Compatibility |
-| :--- | :--- | :--- | :--- | :--- |
-| **Option 1: Node.js Debian Slim (Recommended)** | `node:24-slim` / `node:22-slim` | ~150MB | Fast | High (glibc, broad native dependency compatibility, standard Nitro target) |
-| **Option 2: Node.js Alpine** | `node:24-alpine` | ~110MB | Moderate | Moderate (musl libc occasionally causes issues with native rollups/SWC) |
-| **Option 3: Bun Slim** | `oven/bun:1.2-slim` | ~130MB | Very Fast | High (supports Nitro standalone runner) |
+## 2. Verified Current State
 
-*Decision*: **Multi-Stage Node.js 24 Slim** provides the greatest enterprise compatibility, robust glibc support for Vite/Rollup/Tailwind build passes, and small runtime footprints.
+| Item                   | State on 2026-08-31                                                                                                         | Consequence                                                                                                                         |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| AWS login              | Successful, but the active identity is the account root principal.                                                          | Discovery is complete; stop before provisioning and use an administrative IAM Identity Center user or assumed role for normal work. |
+| ECR repository         | `stp72-company` does not exist in `eu-central-1`.                                                                           | Create it in the infrastructure phase.                                                                                              |
+| App Runner             | No services exist.                                                                                                          | App Runner is not the selected target.                                                                                              |
+| ECS                    | No clusters exist.                                                                                                          | ECS Express Mode will create/use its required resources during setup.                                                               |
+| Route 53               | Public hosted zone `stp72.com.` exists.                                                                                     | DNS and certificate validation can be completed after the service endpoint exists.                                                  |
+| GitHub Actions         | Run `33301445214` failed in `actions/setup-node`.                                                                           | No image was built, pushed, or deployed.                                                                                            |
+| CI failure             | npm caching failed because no npm/yarn lockfile exists.                                                                     | The workflow is blocked before `npm ci`, which would also fail.                                                                     |
+| Dependency artifacts   | `bun.lock` and `bunfig.toml` exist; no `package-lock.json`.                                                                 | Bun is the supported deterministic-install source of truth.                                                                         |
+| Current implementation | Dockerfile uses Bun frozen-lockfile installation; workflow uses Bun validation, ECR image push, and ECS Express deployment. | It cannot deploy until its AWS roles, ECR repository, and GitHub variables are configured.                                          |
 
----
+`npm ci` requires `package-lock.json` or `npm-shrinkwrap.json`; it cannot consume `bun.lock`. [npm documentation](https://docs.npmjs.com/cli/v11/commands/npm-ci/)
 
-### B. AWS Compute Architecture Evaluation
+## 3. Package Manager Decision
 
-| Criterion (Weight) | AWS App Runner (Option A) | Amazon ECS Fargate (Option B) | AWS Lambda Web Adapter (Option C) |
-| :--- | :--- | :--- | :--- |
-| **Local Parity & Simplicity (20%)** | **5 / 5** (Direct 1:1 container execution) | **4 / 5** (Requires Task def, ALB, VPC) | **3 / 5** (Function wrapper behavior) |
-| **Cost for SME Traffic (25%)** | **5 / 5** (Scale-to-zero memory paused, no idle ALB cost) | **3 / 5** (Fixed base cost for ALB + Fargate tasks) | **4.5 / 5** (Pay per ms, but cold start cost) |
-| **Operational Overhead (25%)** | **5 / 5** (Managed HTTPS, auto scaling, no VPC needed) | **2.5 / 5** (Complex networking, subnet routing, ALB) | **3.5 / 5** (API Gateway / Function URL management) |
-| **Security & OIDC Standards (15%)** | **5 / 5** (Native ECR IAM integration) | **5 / 5** (IAM task execution roles) | **5 / 5** (IAM execution roles) |
-| **SSR Streaming & Latency (15%)** | **4.8 / 5** (Low latency, persistent connection) | **5 / 5** (Persistent connection) | **3.5 / 5** (Cold start penalties on SSR HTML) |
-| **Weighted Total Score (100%)** | **4.96 / 5.00** 🏆 *(Winner)* | **3.68 / 5.00** | **3.95 / 5.00** |
+| Option             | Pros                                                                                                                                                                     | Cons                                                                                                                                                                                  |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Bun — selected** | Existing lockfile and configuration; one dependency source of truth; `bun install --frozen-lockfile` protects reproducibility; release-age policy is already configured. | Bun must be installed in local development, CI, and the Docker builder; all build/test commands must be verified under Bun.                                                           |
+| npm                | Existing Dockerfile and workflow already invoke npm; Node-only builder images are familiar.                                                                              | Requires creating and maintaining a second lockfile or migrating away from `bun.lock`; current CI is already broken; `npm install` in Docker is non-deterministic with semver ranges. |
 
-*Decision*: **AWS App Runner** is the optimal production cloud compute target for STP72 Foundation due to its managed simplicity, native automatic SSL/TLS, auto-scaling from 1 to N instances, zero-maintenance load balancing, and direct integration with Amazon ECR. The design also provides full compatibility with **Amazon ECS Fargate** if advanced VPC private networking is later required.
+**Verdict:** retain Bun as the sole dependency installer and lockfile authority. Use a Bun builder stage or install Bun in the builder stage, then copy only Nitro's `.output` artifact into the existing non-root Node 24 runtime image. Do not maintain both lockfiles.
 
----
-
-## 3. Detailed Architecture Plan
+## 4. Target Architecture
 
 ```mermaid
 flowchart TD
-    subgraph LocalDev ["Local Workstation"]
-        LocalGit["Local Git Commit"]
-        DockerBuild["docker build -t stp72-company ."]
-        DockerCompose["docker compose up -d"]
-        LocalRun["Local Container (http://localhost:3000)"]
-
-        DockerBuild --> LocalRun
-        DockerCompose --> LocalRun
-    end
-
-    subgraph GitHubCI ["GitHub Actions CI/CD (deploy-aws.yml)"]
-        PushMain["Push to main / Workflow Dispatch"]
-        VerifySteps["1. Typecheck (tsc) & Lint (eslint)"]
-        OIDCAuth["2. AWS OIDC Authentication (No Static Keys)"]
-        ECRLogin["3. Amazon ECR Login"]
-        ImageBuild["4. Docker Build & Multi-Tagging (SHA + latest)"]
-        ECRPush["5. Push Image to Amazon ECR"]
-        DeployTrigger["6. Trigger AWS App Runner / ECS Deployment"]
-
-        PushMain --> VerifySteps --> OIDCAuth --> ECRLogin --> ImageBuild --> ECRPush --> DeployTrigger
-    end
-
-    subgraph AWSCloud ["AWS Cloud Infrastructure"]
-        ECR["Amazon ECR Repository\n(stp72-company)"]
-        AppRunner["AWS App Runner Service\n(Auto Scaling, Managed HTTPS)"]
-        CustomDomain["Custom Domain / Route 53\n(stp72.com / stp72.dev)"]
-
-        ECRPush --> ECR
-        DeployTrigger --> AppRunner
-        ECR --> AppRunner
-        AppRunner --> CustomDomain
-    end
+  Dev[Developer or CI] --> Frozen[Bun frozen-lockfile install]
+  Frozen --> Verify[Typecheck, lint, docs validation, build]
+  Verify --> Build[Build immutable container image]
+  Build --> ECR[Private ECR repository]
+  GitHub[GitHub Actions OIDC] --> ECR
+  GitHub --> ECS[ECS Express Mode deployment]
+  ECR --> ECS
+  ECS --> ALB[Managed Application Load Balancer]
+  ALB --> Route53[Route 53: stp72.com]
 ```
 
----
+ECS Express Mode requires an image plus a task execution role and an infrastructure role. The task execution role pulls private images and writes logs; Express Mode creates a public ALB in the default VPC/public subnets unless networking is explicitly customized. [AWS ECS guide](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/express-service-getting-started.html)
 
-## 4. Implementation Steps & File Changes
+## 5. Delivery Principles
 
-1. **Create `Dockerfile`**:
-   - Multi-stage build (`deps` -> `builder` -> `runner`).
-   - Caching layer for package manifests (`package.json`, `bun.lock`).
-   - Run production Nitro build (`npm run build`).
-   - Hardened `runner` stage with dedicated non-root user `nodejs` (`uid: 1001`, `gid: 1001`).
-   - Healthcheck integration via built-in lightweight node script or curl.
-   - Configurable `PORT` and `NODE_ENV=production`.
+- Use GitHub OIDC and short-lived credentials; never add static AWS access keys to GitHub.
+- Do not use the AWS account root principal for routine infrastructure work. Create/use an administrative federated identity with temporary credentials and keep root access for root-only account tasks. [AWS root-user guidance](https://docs.aws.amazon.com/IAM/latest/UserGuide/root-user-best-practices.html)
+- Restrict the IAM trust policy to `aud=sts.amazonaws.com` and `sub=repo:STP72-dev/STP72-company:environment:production`. Configure the GitHub `production` environment to allow only the `main` branch and require reviewers. [GitHub OIDC guidance](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws)
+- Build and deploy an immutable Git-SHA image reference or digest. Do not rely on a mutable `latest` tag for rollback.
+- Configure ECR image scanning and a lifecycle policy. ECR supports scan-on-push and tag immutability, but fully immutable tags must not be combined with a repeatedly overwritten `latest` tag. [AWS ECR guidance](https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-tag-mutability.html)
+- Keep the non-root Node runtime and `NITRO_PRESET=node-server` behavior.
+- Treat `/hu` as the initial verified HTTP health path. Add a lightweight dedicated health route only as a separately tested application change.
 
-2. **Create `.dockerignore`**:
-   - Exclude `.git`, `node_modules`, `.output`, `dist`, `docs/.plan`, `*.log`, `.env*`, etc.
+## 6. Looped End-to-End Plan
 
-3. **Create `docker-compose.yml`**:
-   - Production container definition with port `3000:3000`, environment variables, healthchecks, restart policy.
-   - Optional `development` override profile for live volume mounting if requested.
+Every phase follows **inspect → change → validate → update risks → continue or stop**. Do not advance until its exit criterion is true.
 
-4. **Create `.github/workflows/deploy-aws.yml`**:
-   - Production deployment pipeline configured with OIDC `role-to-assume`.
-   - Multi-stage job: verification gate -> build & push to ECR -> update AWS App Runner service.
+| Phase                              | Actions                                                                                                                                                                | Validation and exit criterion                                                                                                                                                        | Failure path / rollback                                                                                        |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| 1. Reconfirm baseline              | Run read-only AWS and GitHub checks; preserve uncommitted analysis/handoff work; replace the root session with an administrative federated identity before any change. | Identity, region, absent ECR/ECS state, hosted zone, and non-root operator identity are recorded.                                                                                    | Stop if the identity is root, the account/region is wrong, or ECS Express Mode is not available in the region. |
+| 2. Repair source reproducibility   | Convert CI and Docker builder to Bun; use `bun install --frozen-lockfile`; align CI/build Node runtime policy.                                                         | Docker build and type check passed locally. Repository-wide lint is currently blocked by 106 pre-existing Prettier violations in `src/`; correct those before the first release run. | Revert only the CI/container change if checks fail.                                                            |
+| 3. Define release semantics        | Use SHA tag/digest; decide ECR scanning, retention, and tag mutability rules.                                                                                          | One release identifier unambiguously resolves to one image.                                                                                                                          | Retain the last known good images.                                                                             |
+| 4. Create AWS prerequisites        | Create ECR, OIDC provider/role, ECS task execution role, and ECS infrastructure role with least privilege.                                                             | OIDC trust permits only the protected `production` environment; the environment permits only `main`; ECR accepts the deployment role.                                                | Remove unused new resources only with explicit approval.                                                       |
+| 5. Deploy a controlled first image | Push one verified image and create the ECS Express service at port `3000`, with a HTTP health check to `/hu`.                                                          | Service reports healthy, endpoint returns HTTP 200, and logs show successful Nitro startup.                                                                                          | Redeploy the prior immutable image reference.                                                                  |
+| 6. Exercise operations             | Verify logs, image scans, deployment status, autoscaling defaults, and documented rollback.                                                                            | A prior release can be selected and restored without rebuilding it.                                                                                                                  | Keep current stable service and retained prior image.                                                          |
+| 7. Cut over the domain             | Associate `stp72.com` or a chosen subdomain, publish Route 53 records, wait for certificate/DNS validation, then test HTTPS.                                           | Domain association is Active and serves the expected SSR page.                                                                                                                       | Restore prior Route 53 record target.                                                                          |
 
-5. **Create & Update Documentation in `docs/`**:
-   - Add `docs/10-deployment-and-cloud-infrastructure.md` covering local Docker guide, AWS App Runner setup, ECR provisioning, GitHub Actions OIDC role configuration, and troubleshooting.
-   - Update `docs/README.md` to index Chapter 10.
-   - Update `docs/07-operations-build-and-deployment.md` to reference the containerized and cloud deployment pipelines.
-   - Update `AGENTS.md` and `README.md` with Docker commands.
+## 7. Required Implementation Changes
 
-6. **Validation & Verification**:
-   - Run `validate.py . --strict`.
-   - Run type checks and build checks.
+| File                                             | Required change                                                                                                                              | Why                                                                                 |
+| ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `Dockerfile`                                     | Completed: deterministic Bun installation using `bun.lock`, with a Node 24 non-root runtime retained.                                        | The container build now shares the chosen dependency source of truth.               |
+| `.github/workflows/deploy-aws.yml`               | Completed: Bun validation, SHA-only ECR push, protected production environment, and ECS Express create/update deployment.                    | The workflow now has a deployment path; AWS/GitHub configuration is still required. |
+| `README.md`                                      | Make Bun the primary install/build workflow; leave npm only as an explicitly unsupported alternative until a lockfile migration is approved. | Prevents contributors recreating the failed npm path.                               |
+| `docs/10-deployment-and-cloud-infrastructure.md` | Document the current/target distinction, ECS Express roles, release/rollback model, and Route 53 cutover.                                    | Maintains an operationally truthful runbook.                                        |
+
+## 8. Immediate Next Step
+
+Configure the GitHub `production` environment and required repository variables, then run the workflow manually on this implementation commit. Its definition of done is a successful GitHub validation job; the environment gate must approve the first AWS resource creation separately.

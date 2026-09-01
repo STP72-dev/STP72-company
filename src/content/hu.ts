@@ -1,9 +1,5 @@
 import type { LocaleContent } from "./types";
-import {
-  solutionsPageHu,
-  solutionFamiliesHu,
-  solutionDetailsHu,
-} from "./solutions.hu";
+import { solutionsPageHu, solutionFamiliesHu, solutionDetailsHu } from "./solutions.hu";
 
 export const hu: LocaleContent = {
   meta: {
@@ -331,8 +327,7 @@ export const hu: LocaleContent = {
           "Van kiindulási állapot, amelyhez mérni lehet a változást — például ráfordított idő vagy hibaarány.",
           "A hiba költsége ismert, és ehhez igazítható az ellenőrzés mértéke.",
         ],
-        note:
-          "Ha a forrásanyag hiányos vagy ellentmondásos, előbb az adat- és folyamatoldalt rendezzük. Ilyenkor az adat- és folyamatoldal rendezése az AI bevezetésének előfeltétele lehet.",
+        note: "Ha a forrásanyag hiányos vagy ellentmondásos, előbb az adat- és folyamatoldalt rendezzük. Ilyenkor az adat- és folyamatoldal rendezése az AI bevezetésének előfeltétele lehet.",
       },
       scope: {
         title: "Mit készítünk?",
@@ -400,7 +395,8 @@ export const hu: LocaleContent = {
       },
       start: {
         title: "Hogyan indul egy projekt?",
-        intro: "A projekt szakaszokra bontható; minden szakasz végén külön értékelhető az eredmény és a következő lépés.",
+        intro:
+          "A projekt szakaszokra bontható; minden szakasz végén külön értékelhető az eredmény és a következő lépés.",
         steps: [
           {
             key: "assessment",
@@ -545,7 +541,8 @@ export const hu: LocaleContent = {
       },
       start: {
         title: "Hogyan indul egy projekt?",
-        intro: "A bevezetés jól körülhatárolt területtel indítható, majd az eredmények és az üzleti igények alapján bővíthető.",
+        intro:
+          "A bevezetés jól körülhatárolt területtel indítható, majd az eredmények és az üzleti igények alapján bővíthető.",
         steps: [
           {
             key: "assessment",
@@ -930,7 +927,8 @@ export const hu: LocaleContent = {
       },
       scope: {
         title: "Mire terjedhet ki?",
-        intro: "A felsoroltakból az kerül be, amit a megoldás jelentősége és a meglévő környezet indokol.",
+        intro:
+          "A felsoroltakból az kerül be, amit a megoldás jelentősége és a meglévő környezet indokol.",
         items: [
           {
             key: "deploy",
@@ -1147,7 +1145,8 @@ export const hu: LocaleContent = {
     },
     prepare: {
       title: "Mit kérünk az első egyeztetéshez?",
-      intro: "Semmi különlegeset. Ennyi általában elég ahhoz, hogy értelmes javaslatot tudjunk adni.",
+      intro:
+        "Semmi különlegeset. Ennyi általában elég ahhoz, hogy értelmes javaslatot tudjunk adni.",
       items: [
         "Rövid leírást arról, hogyan zajlik most az érintett folyamat.",
         "Milyen rendszereket és eszközöket használnak hozzá jelenleg.",
@@ -1159,7 +1158,8 @@ export const hu: LocaleContent = {
     },
     outputs: {
       title: "Mit kap a vállalat az egyes szakaszok végén?",
-      intro: "Minden szakasz zárása kézzelfogható: írásos anyag vagy működő megoldás, nem általános tanácsadói összefoglaló.",
+      intro:
+        "Minden szakasz zárása kézzelfogható: írásos anyag vagy működő megoldás, nem általános tanácsadói összefoglaló.",
       items: [
         {
           key: "written",
@@ -1220,7 +1220,8 @@ export const hu: LocaleContent = {
     moreLabel: "Továbbiak",
     homeLabel: "Kezdőlap",
     breadcrumbLabel: "Morzsamenü",
-    pageInProgress: "Ennek az oldalnak a részletes tartalma folyamatosan bővül. Konkrét kérdés esetén írjon nekünk.",
+    pageInProgress:
+      "Ennek az oldalnak a részletes tartalma folyamatosan bővül. Konkrét kérdés esetén írjon nekünk.",
     currentPageLabel: "Jelenlegi oldal",
     appearanceLabel: "Megjelenés",
     themeToDark: "Váltás sötét megjelenésre",
@@ -1264,7 +1265,6 @@ export const hu: LocaleContent = {
       whatToVerify: "Mit érdemes ellenőrizni",
       close: "Bezárás",
     },
-
   },
   nav: [
     { key: "solutions", label: "Megoldások", href: "#megoldasok" },
@@ -1471,7 +1471,6 @@ export const hu: LocaleContent = {
             "Szerepkör alapú jogosultság- és naplózási elvek.",
             "Riportolási igények és a hozzá tartozó adatszerkezet leírása.",
           ],
-
         },
         {
           key: "forecastlabai",
@@ -1487,7 +1486,6 @@ export const hu: LocaleContent = {
             "Kimutatások, amelyek az előrejelzést és a bizonytalanságot együtt jelenítik meg.",
             "Konténeres futtatásra épülő fejlesztői és telepítési megközelítés.",
           ],
-
         },
         {
           key: "wms-food-prod",
@@ -1503,7 +1501,6 @@ export const hu: LocaleContent = {
             "Jogosultságkezelés és naplózás leírt elvei.",
             "Üzemeltetési megfigyelhetőség és telepítési szempontok dokumentálása.",
           ],
-
         },
         {
           key: "warehouse-management",
@@ -1518,7 +1515,6 @@ export const hu: LocaleContent = {
             "Adatimport és adatexport ellenőrzésekkel.",
             "Monitorozási és üzemeltetési jelzések a működés követéséhez.",
           ],
-
         },
       ],
     },
@@ -1535,7 +1531,13 @@ export const hu: LocaleContent = {
       {
         key: "services",
         title: "Szolgáltatások",
-        pages: ["ai-solutions", "business-systems", "data-forecasting", "software-integrations", "devops-infrastructure"],
+        pages: [
+          "ai-solutions",
+          "business-systems",
+          "data-forecasting",
+          "software-integrations",
+          "devops-infrastructure",
+        ],
       },
       {
         key: "company",
@@ -1562,8 +1564,7 @@ export const hu: LocaleContent = {
     {
       key: "business-applications",
       name: "Üzleti alkalmazások",
-      summary:
-        "Célzott, a működésre szabott alkalmazások — nagy ERP-bevezetés helyett.",
+      summary: "Célzott, a működésre szabott alkalmazások — nagy ERP-bevezetés helyett.",
       points: [
         "Raktár, termelés, bérlés, szolgáltatási folyamatok",
         "Jogosultságok, jóváhagyás, naplózás",
@@ -1575,8 +1576,7 @@ export const hu: LocaleContent = {
     {
       key: "data-forecasting",
       name: "Adat és előrejelzés",
-      summary:
-        "Kimutatások és előrejelzések a meglévő adatokból, a napi döntésekhez illesztve.",
+      summary: "Kimutatások és előrejelzések a meglévő adatokból, a napi döntésekhez illesztve.",
       points: [
         "Egységes adatalap és ellenőrzött adatimport",
         "Vezetői és operatív riportok",
