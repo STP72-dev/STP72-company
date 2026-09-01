@@ -45,7 +45,22 @@ service; AWS currently publishes it as version `v6`.
 2. Render and create `STP72CompanyGitHubDeploy` from the first two JSON files.
 3. Create `STP72CompanyEcsTaskExecution` from its trust and resource-scoped policy.
 4. Create `STP72CompanyEcsExpressInfrastructure` and attach the AWS managed policy.
-5. Wait for IAM propagation, then add the resulting ARNs as GitHub repository variables.
+5. **In a brand-new AWS account/organization member account that has never used
+   ECS, ELB, or Application Auto Scaling before**, create the three AWS
+   service-linked roles ECS Express needs, once, per account:
+   ```sh
+   aws iam create-service-linked-role --aws-service-name ecs.amazonaws.com
+   aws iam create-service-linked-role --aws-service-name elasticloadbalancing.amazonaws.com
+   aws iam create-service-linked-role --aws-service-name ecs.application-autoscaling.amazonaws.com
+   ```
+   Without these, the first `ecs:CreateExpressGatewayService` call fails with
+   `Invalid parameter: Unable to assume the service linked role`. These are
+   account-level, not repository-level — skip this step if any already
+   exists (`aws iam get-role --role-name AWSServiceRoleForECS`, etc.).
+   Deliberately done with an interactive administrator session rather than
+   granting the GitHub deploy role `iam:CreateServiceLinkedRole`, since this
+   is a one-time account bootstrap need, not a recurring pipeline permission.
+6. Wait for IAM propagation, then add the resulting ARNs as GitHub repository variables.
 
 ## Provisioning Sequence (AWS CLI)
 
