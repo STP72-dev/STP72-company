@@ -96,15 +96,15 @@ Do not use a mutable `latest` tag as the rollback source. ECR supports scanning 
 
 ### Current AWS account facts
 
-| Resource             | Status                                           | Operational note                                                                  |
-| -------------------- | ------------------------------------------------ | --------------------------------------------------------------------------------- |
-| Region               | `eu-central-1`                                   | Production region.                                                               |
-| ECR repository       | Created; commit-SHA release image is published   | Re-check scan-on-push, tag immutability, and lifecycle retention during cutover. |
-| GitHub OIDC provider | Created and in use                               | Issues short-lived release credentials; no static AWS keys are stored in GitHub. |
-| ECS Express service  | `ACTIVE`                                         | Runs one to two tasks with port `3000` and HTTP health path `/hu`.               |
-| CloudWatch logs      | Created and observed                             | Startup log stream was clean during release verification.                        |
-| Route 53 hosted zone | `stp72.com.` exists and is public                | Apex rollback record still must be captured before any DNS change.               |
-| ACM / custom domain  | Not yet configured for `stp72.com` cutover       | Certificate, listener rule, and Route 53 alias remain the final release phase.  |
+| Resource             | Status                                         | Operational note                                                                 |
+| -------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------- |
+| Region               | `eu-central-1`                                 | Production region.                                                               |
+| ECR repository       | Created; commit-SHA release image is published | Re-check scan-on-push, tag immutability, and lifecycle retention during cutover. |
+| GitHub OIDC provider | Created and in use                             | Issues short-lived release credentials; no static AWS keys are stored in GitHub. |
+| ECS Express service  | `ACTIVE`                                       | Runs one to two tasks with port `3000` and HTTP health path `/hu`.               |
+| CloudWatch logs      | Created and observed                           | Startup log stream was clean during release verification.                        |
+| Route 53 hosted zone | `stp72.com.` exists and is public              | Apex rollback record still must be captured before any DNS change.               |
+| ACM / custom domain  | Not yet configured for `stp72.com` cutover     | Certificate, listener rule, and Route 53 alias remain the final release phase.   |
 
 Before provisioning, sign in through an IAM Identity Center administrative user or assume an administrative role with temporary credentials. AWS recommends keeping the root principal for tasks that require root access only. [AWS root-user best practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/root-user-best-practices.html)
 
@@ -128,13 +128,13 @@ ECS Express Mode needs a private ECR image, task execution role, and infrastruct
 
 ECS Express Mode was available and selected; no App Runner or standard ECS/Fargate fallback was required. The initial deployment used container port `3000`, HTTP health path `/hu`, CPU `1024`, memory `2048`, and minimum/maximum task counts of one and two.
 
-| Verification         | Observed result                                                               |
-| -------------------- | ----------------------------------------------------------------------------- |
-| GitHub Actions       | Run `33561626212`: validation and release jobs succeeded.                    |
-| Immutable release    | ECS Express deployed the commit-SHA image beginning `98a6d63`.               |
-| ECS Express          | Service is `ACTIVE`.                                                         |
-| Application routes   | `/hu`, English hub, and nested English solution each returned HTTP 200.      |
-| Runtime observations | CloudWatch startup logs were clean; no application error was observed.       |
+| Verification         | Observed result                                                         |
+| -------------------- | ----------------------------------------------------------------------- |
+| GitHub Actions       | Run `33561626212`: validation and release jobs succeeded.               |
+| Immutable release    | ECS Express deployed the commit-SHA image beginning `98a6d63`.          |
+| ECS Express          | Service is `ACTIVE`.                                                    |
+| Application routes   | `/hu`, English hub, and nested English solution each returned HTTP 200. |
+| Runtime observations | CloudWatch startup logs were clean; no application error was observed.  |
 
 The deployment was initially blocked by a least-privilege omission (`ecr:BatchGetImage`) and, in a new AWS account, missing ECS/ELB/Application Auto Scaling service-linked roles. Both were resolved through the non-root administrative session. The service-linked roles are one-time account bootstrap resources; the GitHub deployment role does not have permission to create them.
 
