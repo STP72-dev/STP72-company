@@ -83,7 +83,7 @@ Branch `main`, up to date with `origin` (`https://github.com/STP72-dev/STP72-com
 
 **Live production state:** ECS Express service `stp72-company` in cluster `default`, `ACTIVE`, running the `98a6d63` image, reachable at `https://st-ac41566cdbe0408fb416df509df4a30b.ecs.eu-central-1.on.aws`. `stp72.com` itself is **not yet** pointed at it — the public hosted zone exists but no cutover has started.
 
-**GitHub Actions operational note:** the `production` environment requires a fresh manual reviewer approval on *every single run*, not just once ever — this was observed repeatedly and is expected GitHub deployment-protection behavior, not a bug. Approve at `https://github.com/STP72-dev/STP72-company/actions/runs/<run-id>`.
+**GitHub Actions operational note:** the `production` environment requires a fresh manual reviewer approval on _every single run_, not just once ever — this was observed repeatedly and is expected GitHub deployment-protection behavior, not a bug. Approve at `https://github.com/STP72-dev/STP72-company/actions/runs/<run-id>`.
 
 **Concurrent session note:** `HANDOFF.md`, `docs/07-operations-build-and-deployment.md`, and `docs/10-deployment-and-cloud-infrastructure.md` were all found with uncommitted local edits at the start of this session that this session did not make. Their content accurately describes the same deployment this session performed (same run ID, same image SHA), strongly suggesting a second, concurrently-running agent session in this same working directory. The prior `HANDOFF.md` was archived (not discarded) to `.handoffs/2026-09-02-pre-handoff.md`; the `docs/07`/`docs/10` edits were left untouched. Coordinate before committing further changes to those two files to avoid clobbering that session's work.
 

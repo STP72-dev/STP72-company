@@ -24,14 +24,14 @@
 
 ## Release Evidence
 
-| Check | Result |
-| --- | --- |
-| GitHub Actions | Run `33561626212`, validation and release jobs successful |
-| ECR / deployed release | Immutable commit-SHA image beginning `98a6d63` |
-| ECS Express | `ACTIVE` |
-| Application health | HTTP 200: `/hu`, `/en/ai-solutions`, `/en/ai-solutions/ai-agents` |
-| Runtime logs | Clean application startup; no observed errors |
-| Final hostname | Not yet cut over; service is currently verified at its AWS-generated HTTPS endpoint |
+| Check                  | Result                                                                              |
+| ---------------------- | ----------------------------------------------------------------------------------- |
+| GitHub Actions         | Run `33561626212`, validation and release jobs successful                           |
+| ECR / deployed release | Immutable commit-SHA image beginning `98a6d63`                                      |
+| ECS Express            | `ACTIVE`                                                                            |
+| Application health     | HTTP 200: `/hu`, `/en/ai-solutions`, `/en/ai-solutions/ai-agents`                   |
+| Runtime logs           | Clean application startup; no observed errors                                       |
+| Final hostname         | Not yet cut over; service is currently verified at its AWS-generated HTTPS endpoint |
 
 ## Files and State Worth Preserving
 
@@ -53,6 +53,7 @@ The working tree contains the documentation refresh from this session. Preserve 
    ```
 
    Expected outcome: saved current `A` and `AAAA` apex record sets, including alias target fields if present.
+
 2. Request or confirm authorization for the public DNS change, then create or validate the ACM certificate in `eu-central-1`, complete DNS validation, and configure the AWS-supported ALB listener/host routing for `stp72.com`.
 3. Change the Route 53 apex alias only after certificate issuance and service health are confirmed. Verify `https://stp72.com`, root locale redirect, `/hu`, `/en/ai-solutions`, and `/en/ai-solutions/ai-agents`.
 4. If cutover fails, immediately restore the recorded apex record set and verify the rollback target.
