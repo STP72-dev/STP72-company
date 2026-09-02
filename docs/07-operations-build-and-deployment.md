@@ -95,7 +95,7 @@ wrangler pages deploy .output/public
 
 The repository includes a production multi-stage [`Dockerfile`](../Dockerfile), [`docker-compose.yml`](../docker-compose.yml), and automated AWS CI/CD pipeline in [`.github/workflows/deploy-aws.yml`](../.github/workflows/deploy-aws.yml).
 
-For comprehensive instructions on Bun-locked local builds, Docker Compose local setup, Amazon ECR repository creation, ECS Express Mode deployment via GitHub OIDC, and Route 53 cutover, refer to **[Chapter 10: Containerization, Local Deployment & AWS Cloud Architecture](10-deployment-and-cloud-infrastructure.md)**.
+For comprehensive instructions and the verified production deployment record for Bun-locked local builds, Docker Compose local setup, Amazon ECR, ECS Express Mode deployment via GitHub OIDC, and the remaining Route 53 cutover, refer to **[Chapter 10: Containerization, Local Deployment & AWS ECS Express Mode](10-deployment-and-cloud-infrastructure.md)**.
 
 ---
 
